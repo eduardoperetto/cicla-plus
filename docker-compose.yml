@@ -1,0 +1,35 @@
+version: '3.3'
+
+services:
+  db:
+    image: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backups:/backups/
+    env_file: ./env/.env
+    restart: unless-stopped
+    networks:
+      - nginx-network
+
+  backend:
+    build: ./backend
+    ports:
+      - 8000:8000
+    volumes:
+      - ./backend:/backend/
+    depends_on:
+      - db
+    env_file: ./env/.env
+    links:
+      - db:db
+    networks:
+      - nginx-network
+    restart: unless-stopped
+
+volumes:
+    postgres_data:
+
+networks:
+  nginx-network:
+    external:
+      name: nginx-network
