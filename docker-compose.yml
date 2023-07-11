@@ -8,8 +8,6 @@ services:
       - ./backups:/backups/
     env_file: ./env/.env
     restart: unless-stopped
-    networks:
-      - nginx-network
 
   backend:
     build: ./backend
@@ -22,14 +20,8 @@ services:
     env_file: ./env/.env
     links:
       - db:db
-    networks:
-      - nginx-network
     restart: unless-stopped
 
 volumes:
     postgres_data:
 
-networks:
-  nginx-network:
-    external:
-      name: nginx-network
