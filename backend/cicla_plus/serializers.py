@@ -26,6 +26,7 @@ class AdvertisementSerializer(serializers.ModelSerializer):
     class Meta:
         model = Advertisement
         fields = '__all__'
+        depth = 1
 
 class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
