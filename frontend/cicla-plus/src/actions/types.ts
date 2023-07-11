@@ -1,0 +1,12 @@
+import { LoginAction } from "../reducers/login";
+import { RootState } from "../store/configureStore";
+
+export type GetState = () => RootState;
+export type ThunkAction<T> = (dispatch: Dispatch, getState: GetState) => T;
+
+export interface Dispatch {
+  (action: Action): void;
+  <T>(action: ThunkAction<T>): T;
+}
+
+export type Action = LoginAction;
