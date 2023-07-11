@@ -15,4 +15,4 @@ RUN pip install -r requirements.txt
 EXPOSE 8000
 
 # Run backend
-CMD python manage.py collectstatic --noinput --clear;python manage.py migrate;python manage.py runserver 0.0.0.0:8000
+CMD python manage.py collectstatic --noinput --clear;python manage.py migrate;python manage.py createsuperuser --noinput; python manage.py runserver 0.0.0.0:8000
