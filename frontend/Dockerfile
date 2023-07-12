@@ -1,0 +1,10 @@
+FROM node:alpine 
+ENV NODE_ENV development
+
+WORKDIR /app
+
+COPY ./cicla-plus /app
+
+EXPOSE 3000
+RUN npm install
+CMD ["npm", "run", "start"]
