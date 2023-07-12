@@ -1,3 +1,4 @@
+import React from "react";
 import { Typography } from "@material-tailwind/react";
 
 export default function Footer() {

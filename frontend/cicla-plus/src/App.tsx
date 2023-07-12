@@ -11,7 +11,7 @@ function App() {
   return (
     <>
       {isAuthenticated && <Navbar />}
-      <div className="w-full px-3 mx-auto pb-2">
+      <div className="w-full px-12 mx-auto pb-2 h-screen bg-[#fafafa]">
         <DefaultRouter />
         <br />
         <br />
