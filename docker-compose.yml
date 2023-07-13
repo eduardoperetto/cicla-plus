@@ -24,6 +24,8 @@ services:
 
   frontend:
     build: ./frontend
+    volumes:
+      - ./frontend/cicla-plus/src:/cicla-plus/src
     ports:
       - 8007:3000
     env_file: ./env/.env

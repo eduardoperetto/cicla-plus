@@ -1,9 +1,9 @@
 FROM node:alpine 
 ENV NODE_ENV development
 
-WORKDIR /app
+WORKDIR /cicla-plus
 
-COPY ./cicla-plus /app
+COPY ./cicla-plus /cicla-plus
 
 EXPOSE 3000
 RUN npm install
