@@ -1,12 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import { DefaultRouter } from "./infrastructure/DefaultRouter";
-import { useSelector } from "./store/configureStore";
+import { useDispatch, useSelector } from "./store/configureStore";
+import { getCompaniesAction } from "./actions/companies";
+import { getAdvertisementsAction } from "./actions/advertisements";
 
 function App() {
   const isAuthenticated = useSelector((s) => s.login.authenticated);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      dispatch(getCompaniesAction());
+      dispatch(getAdvertisementsAction());
+    }
+  }, [isAuthenticated, dispatch]);
 
   return (
     <>

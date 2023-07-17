@@ -1,3 +1,5 @@
+import { AdvertisementsAction } from "../reducers/advertisements";
+import { CompaniesAction } from "../reducers/companies";
 import { LoginAction } from "../reducers/login";
 import { RootState } from "../store/configureStore";
 
@@ -9,4 +11,4 @@ export interface Dispatch {
   <T>(action: ThunkAction<T>): T;
 }
 
-export type Action = LoginAction;
+export type Action = LoginAction | AdvertisementsAction | CompaniesAction;

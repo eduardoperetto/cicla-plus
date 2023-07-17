@@ -4,12 +4,12 @@ import { materialSchema } from "./Material";
 
 export const advertisementSchema = z.object({
   id: z.number(),
-  materialDescription: z.string(),
-  materialType: materialSchema,
+  material_description: z.string(),
+  material_type: materialSchema,
   quantity: z.number(),
-  acceptanceCondition: z.string(),
-  profitType: z.string(),
-  timesViewed: z.number(),
+  acceptance_condition: z.string(),
+  profit_type: z.string(),
+  times_viewed: z.number(),
   company: companySchema,
 });
 
