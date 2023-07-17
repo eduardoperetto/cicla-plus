@@ -12,6 +12,8 @@ SECRET_KEY = environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = int(environ.get('DEBUG') or 0)
 
+CORS_ORIGIN_ALLOW_ALL = True
+
 ALLOWED_HOSTS = environ.get('DJANGO_ALLOWED_HOSTS', default='').split(' ')
 
 
