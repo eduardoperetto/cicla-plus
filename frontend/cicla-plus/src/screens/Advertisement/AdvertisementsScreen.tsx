@@ -17,6 +17,7 @@ import {
 import { MaterialImage } from "./MaterialImage";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { materialTypeToString } from "../../utils/material";
+import { getAdvertisements } from "../../api/getAdvertisements";
 
 type Advertisement = {
   id: number;
@@ -239,6 +240,15 @@ export default function AdvertisementsScreen() {
             Não encontramos nenhum resultado para sua busca.
           </Typography>
         )}
+        <Button
+          onClick={async () => {
+            const foo = await getAdvertisements();
+
+            console.log(foo);
+          }}
+        >
+          Boooo
+        </Button>
       </div>
     </>
   );
