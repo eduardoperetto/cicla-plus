@@ -1,4 +1,4 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, permissions
 from django.core.serializers import serialize
 from .models import *
 from .serializers import *
@@ -21,5 +21,6 @@ class TransactionViewSet(viewsets.ModelViewSet):
     queryset = Transaction.objects.all()
 
 class RegisterView(generics.CreateAPIView):
+    permission_classes = []
     queryset = User.objects.all()
     serializer_class = RegisterSerializer
