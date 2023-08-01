@@ -54,7 +54,7 @@ def registerPerson(request):
         )
         person.save()
 
-        return JsonResponse([{'cpf': request.POST.get('cpf')}], safe=False)
+        return JsonResponse([{'Result': 'Success'}], safe=False)
 
 '''
 class RegisterPersonView(APIView):
