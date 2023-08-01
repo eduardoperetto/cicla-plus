@@ -34,7 +34,48 @@ class TransactionSerializer(serializers.ModelSerializer):
         fields = '__all__'
         depth = 1
 
-class RegisterSerializer(serializers.ModelSerializer):
+'''
+class PersonCreateSerializer(serializers.ModelSerializer):
+    username = serializers.CharField()
+    password = serializers.CharField(write_only=True)
+    password2 = serializers.CharField(write_only=True)
+    email = serializers.EmailField()
+    first_name = serializers.CharField()
+    last_name = serializers.CharField()
+    location = serializers.CharField(max_length=50)
+    phone = serializers.CharField(max_length=12)
+    cpf = serializers.IntegerField()
+    birthday = serializers.DateField()
+
+    def validate(self, data):
+        if data['password'] != data['password2']:
+            raise serializers.ValidationError("Passwords must match.")
+        return data
+
+    def create(self, validated_data):
+        user_data = {
+            'username': validated_data['username'],
+            'email': validated_data['email'],
+            'first_name': validated_data['first_name'],
+            'last_name': validated_data['last_name']
+        }
+        user = User.objects.create(**user_data)
+
+        user.set_password(validated_data['password'])
+        user.save()
+
+        person = Person.objects.create(user=user, location=validated_data['location'],
+                                       phone=validated_data['phone'], cpf=validated_data['cpf'],
+                                       birthdate=validated_data['birthday'])
+        return person
+
+    class Meta:
+        model = Person
+        fields = ['username', 'password', 'password2', 'email', 'first_name', 'last_name',
+                  'location', 'phone', 'cpf', 'birthday']
+    
+
+class RegisterPersonSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
             required=True,
             validators=[UniqueValidator(queryset=User.objects.all())]
@@ -44,11 +85,30 @@ class RegisterSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(write_only=True, required=True)
 
     class Meta:
-        model = User
-        fields = ('username', 'password', 'password2', 'email', 'first_name', 'last_name')
+        model = Person
+        fields = (
+            'username', 
+            'password', 
+            'password2', 
+            'email', 
+            'first_name', 
+            'last_name', 
+            'location',
+            'phone',
+            'cpf',
+            'birthday',
+        )
         extra_kwargs = {
+            'username': {'required': True},
+            'password': {'required': True},
+            'password2': {'required': True},
+            'email': {'required': True},
             'first_name': {'required': True},
-            'last_name': {'required': True}
+            'last_name': {'required': True},
+            'location': {'required': True},
+            'phone': {'required': True},
+            'cpf': {'required': True},
+            'birthday': {'required': True}
         }
 
     def validate(self, attrs):
@@ -65,8 +125,20 @@ class RegisterSerializer(serializers.ModelSerializer):
             last_name=validated_data['last_name']
         )
 
-        
         user.set_password(validated_data['password'])
         user.save()
 
-        return user
+        person = Person.objects.create(
+            user=user,
+            location=validated_data['location'],
+            phone=validated_data['phone'],
+            cpf=validated_data['cpf'],
+            birthday=validated_data['birthday'],
+        )
+
+        person.save()
+
+        return person
+
+'''
+    
