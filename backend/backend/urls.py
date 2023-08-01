@@ -24,6 +24,6 @@ urlpatterns = [
     re_path(r'^static/(?P<path>.*)$', serve,{'document_root': os.path.join(BASE_DIR, 'static')}), 
     path('admin/', admin.site.urls),
     path('register-person/', registerPerson, name='registerPerson'),
-    path('auth/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('auth/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('auth/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
