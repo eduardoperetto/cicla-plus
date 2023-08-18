@@ -12,7 +12,7 @@ export default function LoginScreen() {
       <div className="flex flex-col items-center gap-4">
       <Input size="md" label="E-mail" />
       <Input size="md" label="Senha" />
-        <Button
+        <Button size="sm"
           onClick={async () =>
             await dispatch(loginAction({ username: "foo", password: "bar" }))
           }
@@ -20,7 +20,7 @@ export default function LoginScreen() {
           Entrar
           </Button>
           <Link to="/register"> {/* Use Link para redirecionar */}
-            <Button>
+            <Button size="sm">
               Registrar-se
             </Button>
           </Link>
