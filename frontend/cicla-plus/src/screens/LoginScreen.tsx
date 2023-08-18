@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Input } from "@material-tailwind/react";
 import { useDispatch } from "../store/configureStore";
 import { loginAction } from "../actions/login";
+import { Link } from "react-router-dom";
 
 export default function LoginScreen() {
   const dispatch = useDispatch();
@@ -17,14 +18,12 @@ export default function LoginScreen() {
           }
         >
           Entrar
-        </Button>
-        <Button
-        onClick={async () =>
-          await dispatch(loginAction({ username: "foo", password: "bar" }))
-        }
-        >
-          Registrar-se
-        </Button>
+          </Button>
+          <Link to="/register"> {/* Use Link para redirecionar */}
+            <Button>
+              Registrar-se
+            </Button>
+          </Link>
       </div>
     </div>
   );
