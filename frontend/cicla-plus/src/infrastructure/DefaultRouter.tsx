@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import LoginRoute from "./LoginRoute";
 import AuthRoute from "./AuthRoute";
 import { store } from "../store/configureStore";
+import AccountScreen from "../screens/AccountScreen";
 import LoginScreen from "../screens/LoginScreen";
 import HomeScreen from "../screens/HomeScreen";
 import RegisterScreenPerson from "../screens/RegisterScreenPerson";
@@ -51,7 +52,16 @@ export function DefaultRouter() {
             <RegisterScreenEnterprise />
           </LoginRoute>
         }
+        
       />
+      <Route
+        path="/account"
+        element={
+          <AuthRoute>
+            <AccountScreen />
+          </AuthRoute>
+        }
+        />
 
       {/* no match route */}
       {/*https://reactrouter.com/docs/en/v6/getting-started/tutorial#adding-a-no-match-route*/}
