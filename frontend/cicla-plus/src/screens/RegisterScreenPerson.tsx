@@ -86,7 +86,7 @@ export default function RegisterScreen() {
                 )}
               </div>
 
-              <div className="sm:col-span-4">
+              <div className="sm:col-span-3">
                 <Input size="md" label="E-mail"
                   value={email}
                   onChange={(e) => validateField(e.target.value, "email", setEmailError, "Formato de e-mail inválido", setEmail)}
@@ -97,6 +97,11 @@ export default function RegisterScreen() {
               </div>
 
               <div className="sm:col-span-3">
+                <Input size="md" label="CPF"
+                />
+                </div>
+
+              <div className="sm:col-span-2">
                 <Select label="Estado">
                   <Option> </Option>
                   <Option>RS</Option>
@@ -107,6 +112,17 @@ export default function RegisterScreen() {
                   <Option>MG</Option>
                 </Select>
               </div>
+
+              <div className="sm:col-span-2">
+                <Input size="md" label="Cidade"
+                  value={cidade}
+                  onChange={(e) => validateField(e.target.value, "cidade", setCidadeError, "Cidade inválida", setCidade)}
+                />
+                {cidadeError && (
+                  <span className="text-red-500 text-sm">{cidadeError}</span>
+                )}
+              </div>
+
               <div className="col-span-full">
                 <Input size="md" label="Rua"
                   value={rua}
@@ -114,16 +130,6 @@ export default function RegisterScreen() {
                 />
                 {ruaError && (
                   <span className="text-red-500 text-sm">{ruaError}</span>
-                )}
-              </div>
-
-              <div className="sm:col-span-2 sm:col-start-1">
-                <Input size="md" label="Cidade"
-                  value={cidade}
-                  onChange={(e) => validateField(e.target.value, "cidade", setCidadeError, "Cidade inválida", setCidade)}
-                />
-                {cidadeError && (
-                  <span className="text-red-500 text-sm">{cidadeError}</span>
                 )}
               </div>
 
@@ -157,7 +163,7 @@ export default function RegisterScreen() {
           </div>
         </div>
     <div className="mt-6 flex items-center justify-end">
-      <Link to="/login"> {/* Use Link para redirecionar */}
+      <Link to="/login">
         <Button
           variant="text"
           color="red"
@@ -167,7 +173,7 @@ export default function RegisterScreen() {
           Cancelar
         </Button>
       </Link>
-      <Link to="/login"> {/* Use Link para redirecionar */}
+      <Link to="/login">
         <Button
           color="green"
           variant="gradient"

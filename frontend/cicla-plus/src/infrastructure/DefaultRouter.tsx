@@ -5,7 +5,8 @@ import AuthRoute from "./AuthRoute";
 import { store } from "../store/configureStore";
 import LoginScreen from "../screens/LoginScreen";
 import HomeScreen from "../screens/HomeScreen";
-import RegisterScreen from "../screens/RegisterScreen";
+import RegisterScreenPerson from "../screens/RegisterScreenPerson";
+import RegisterScreenEnterprise from "../screens/RegisterScreenEnterprise";
 import AdvertisementsScreen from "../screens/Advertisement/AdvertisementsScreen";
 
 export function DefaultRouter() {
@@ -36,18 +37,18 @@ export function DefaultRouter() {
         }
       />
       <Route
-        path="/registerperson"
+        path="/register-person"
         element={
           <LoginRoute>
-            <RegisterScreen />
+            <RegisterScreenPerson />
           </LoginRoute>
         }
       />
       <Route
-        path="/registerenterprise"
+        path="/register-enterprise"
         element={
           <LoginRoute>
-            <RegisterScreen />
+            <RegisterScreenEnterprise />
           </LoginRoute>
         }
       />

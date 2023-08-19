@@ -46,7 +46,7 @@ export default function LoginScreen() {
     <div className="flex w-screen h-screen justify-center items-center">
       <div className="flex flex-col items-center gap-4">
         <Input size="md" label="E-mail" />
-        <Input size="md" label="Senha" />
+        <Input size="md" label="Senha" type="password" />
         <Button
           size="sm"
           onClick={async () =>
@@ -109,7 +109,7 @@ export default function LoginScreen() {
             >
               <span>Cancelar</span>
             </Button>
-            <Link to={anuncianteSelected ? "/registerenterprise" : tipoCadastro === "pessoa_juridica" ? "/registerenterprise" : "/registerperson"}>
+            <Link to={anuncianteSelected ? "/register-enterprise" : tipoCadastro === "pessoa_juridica" ? "/register-enterprise" : "/register-person"}>
               <Button
                 variant="gradient"
                 color="green"
