@@ -8,9 +8,6 @@ import {
   DialogFooter,
   Radio,
   Collapse,
-  Card,
-  Typography,
-  CardBody,
 } from "@material-tailwind/react";
 import { useDispatch } from "../store/configureStore";
 import { loginAction } from "../actions/login";
@@ -20,9 +17,10 @@ export default function LoginScreen() {
   const dispatch = useDispatch();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [fornecedorSelected, setFornecedorSelected] = useState(false);
+  const [anuncianteSelected, setAnuncianteSelected] = useState(false);
+  const [tipoCadastro, setTipoCadastro] = useState("");
 
   const handleDialogOpen = () => {
-    setFornecedorSelected(false);
     setDialogOpen(true);
   };
 
@@ -32,10 +30,16 @@ export default function LoginScreen() {
 
   const handleFornecedorSelect = () => {
     setFornecedorSelected(true);
+    setAnuncianteSelected(false);
   };
 
   const handleAnuncianteSelect = () => {
-    setFornecedorSelected(false); // Fechar o toggle ao selecionar "Quero ser um ANUNCIANTE!"
+    setAnuncianteSelected(true);
+    setFornecedorSelected(false);
+  };
+
+  const handleTipoCadastroChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTipoCadastro(event.target.value);
   };
 
   return (
@@ -51,29 +55,46 @@ export default function LoginScreen() {
         >
           Entrar
         </Button>
-        <Button onClick={handleDialogOpen} size="sm">
+        <Button
+          onClick={handleDialogOpen}
+          size="sm"
+        >
           Registrar-se
         </Button>
         <Dialog open={dialogOpen} handler={handleDialogClose}>
           <DialogHeader>Escolha seu tipo de cadastro: </DialogHeader>
           <DialogBody divider>
             <div className="flex flex-col items-center gap-3">
-            <Button onClick={handleAnuncianteSelect}>
+              <Button
+                onClick={handleAnuncianteSelect}
+                color={anuncianteSelected ? "blue" : "gray"} // Altera a cor do botão com base no estado
+              >
                 Quero ser um ANUNCIANTE!
               </Button>
-              <Button onClick={handleFornecedorSelect}>
+              <Button
+                onClick={handleFornecedorSelect}
+                color={fornecedorSelected ? "blue" : "gray"} // Altera a cor do botão com base no estado
+              >
                 Quero ser um FORNECEDOR!
               </Button>
               {fornecedorSelected && (
                 <Collapse open={fornecedorSelected}>
-                  <Card className="my-2 mx-auto w-4/6 max-h-25 overflow-y-auto">
-                    <CardBody>
-                      <Typography>
-                        <Radio name="type" label="Pessoa Física" />
-                        <Radio name="type" label="Pessoa Jurídica" defaultChecked />
-                      </Typography>
-                    </CardBody>
-                  </Card>
+                  <div className="flex flex-col items-center">
+                  <Radio
+                      name="type"
+                      label="Pessoa Física"
+                      value="pessoa_fisica"
+                      checked={tipoCadastro === "pessoa_fisica"}
+                      onChange={handleTipoCadastroChange}
+                    />
+                    <Radio
+                      name="type"
+                      label="Pessoa Jurídica"
+                      value="pessoa_juridica"
+                      checked={tipoCadastro === "pessoa_juridica"}
+                      onChange={handleTipoCadastroChange}
+                    />
+                  </div>
                 </Collapse>
               )}
             </div>
@@ -88,7 +109,7 @@ export default function LoginScreen() {
             >
               <span>Cancelar</span>
             </Button>
-            <Link to="/register">
+            <Link to={anuncianteSelected ? "/registerenterprise" : tipoCadastro === "pessoa_juridica" ? "/registerenterprise" : "/registerperson"}>
               <Button
                 variant="gradient"
                 color="green"

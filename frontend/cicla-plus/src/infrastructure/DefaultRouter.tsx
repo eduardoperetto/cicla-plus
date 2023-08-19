@@ -36,7 +36,15 @@ export function DefaultRouter() {
         }
       />
       <Route
-        path="/register"
+        path="/registerperson"
+        element={
+          <LoginRoute>
+            <RegisterScreen />
+          </LoginRoute>
+        }
+      />
+      <Route
+        path="/registerenterprise"
         element={
           <LoginRoute>
             <RegisterScreen />
