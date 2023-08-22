@@ -12,7 +12,7 @@ export async function getCompanies(): Promise<
   Result.Result<GetCompaniesResponse, { message: string }>
 > {
   try {
-    const response = await api.get("/Company");
+    const response = await api.get("/company");
 
     const returnValue = getCompaniesSchema.parse(response.data);
     return Result.ok(returnValue);

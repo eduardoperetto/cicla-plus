@@ -12,7 +12,7 @@ export async function getAdvertisements(): Promise<
   Result.Result<GetAdvertisementsResponse, { message: string }>
 > {
   try {
-    const response = await api.get("/Advertisement");
+    const response = await api.get("/advertisement");
 
     const returnValue = getAdvertisementsSchema.parse(response.data);
     return Result.ok(returnValue);
