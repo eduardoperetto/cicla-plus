@@ -7,6 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import *
 from .serializers import *
 from rest_framework import generics
+import random, string
 from datetime import datetime
 
 class PersonViewSet(viewsets.ModelViewSet):
@@ -61,17 +62,24 @@ def registerCompany(request):
     else:
         raise Exception("GET not allowed")
 
+def gen_transaction_code():
+    characters = string.ascii_letters + string.digits
+    random_code = ''.join(random.choice(characters) for _ in range(6))
+    return random_code.upper()
+
 @csrf_exempt
 def newTransaction(request):
     if request.method == 'POST':
+        gen_token = gen_transaction_code()
         transaction = Transaction.objects.create(
             user=Person.objects.get(id=request.POST.get('user')), 
             advertisement=Advertisement.objects.get(id=request.POST.get('advertisement')),
-            status=request.POST.get('status')
+            status=request.POST.get('status'),
+            token = gen_token
         )
         transaction.save()
 
-        return JsonResponse([{'Result': 'Success'}], safe=False)
+        return JsonResponse([{'Result': 'Success', 'Token': gen_token}], safe=False)
     else:
         raise Exception("GET not allowed")
     
@@ -95,13 +103,16 @@ def newAdvertisement(request):
 @csrf_exempt
 def updateTransaction(request):
     if request.method == 'POST':
-        transaction = Transaction.objects.filter(id=request.POST.get('id'))
-        transaction.update(
-            status=request.POST.get('status'),
-            last_update=datetime.now()
-        )
+        transaction = Transaction.objects.filter(id=request.POST.get('id'), token=request.POST.get('token').upper())
+        if transaction.count() < 1:
+            raise Exception("Id/Token not found")
+        else:
+            transaction.update(
+                status=request.POST.get('status'),
+                last_update=datetime.now()
+            )
 
-        return JsonResponse([{'Result': 'Success'}], safe=False)
+            return JsonResponse([{'Result': 'Success'}], safe=False)
     else:
         raise Exception("GET not allowed")
 
@@ -118,8 +129,8 @@ def updateAdvertisement(request):
 @csrf_exempt
 def deleteAdvertisement(request):
     if request.method == 'POST':
-        advertisement = Advertisement.objects.get(id=request.POST.get('id'))
-        advertisement.delete()
+        advertisement = Advertisement.objects.filter(id=request.POST.get('id'))
+        advertisement.update(is_deleted=True, hidden=True)
 
         return JsonResponse([{'Result': 'Success'}], safe=False)
     else:

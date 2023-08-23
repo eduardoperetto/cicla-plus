@@ -38,6 +38,7 @@ class Advertisement(models.Model):
     times_viewed = models.PositiveIntegerField()
     company = models.ForeignKey('Company', on_delete=models.CASCADE)
     hidden = models.BooleanField()
+    is_deleted = models.BooleanField(default=False)
 
 class Transaction(models.Model):
     advertisement = models.ForeignKey('Advertisement', on_delete=models.CASCADE)
@@ -51,3 +52,4 @@ class Transaction(models.Model):
     ])
     created_at = models.DateTimeField(auto_now=True)
     last_update = models.DateTimeField(default=datetime.now())
+    token = models.CharField(max_length=6)
