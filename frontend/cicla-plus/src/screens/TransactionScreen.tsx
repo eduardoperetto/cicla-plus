@@ -7,8 +7,6 @@ import {
 import { Spinner, Typography } from "@material-tailwind/react";
 import { store } from "../store/configureStore";
 
-interface Props {}
-
 const TransactionScreen = () => {
   const username = store.getState().login.user;
   const transactionsState = useSelector(TransactionState);

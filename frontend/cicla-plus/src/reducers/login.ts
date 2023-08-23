@@ -1,6 +1,8 @@
 export type LoginState = {
   authenticated: boolean;
   accessToken: string | null;
+  user: string | null;
+  is_admin: boolean;
 };
 
 export type LoginAction =
@@ -10,18 +12,22 @@ export type LoginAction =
 const initialState: LoginState = {
   authenticated: false,
   accessToken: null,
+  user: null,
+  is_admin: false,
 };
 
 export default function login(
-  state: LoginState = { authenticated: false, accessToken: null },
+  state: LoginState = initialState,
   action: LoginAction
 ) {
   switch (action.type) {
     case "LOGIN":
-      var { accessToken } = action.data;
+      var { accessToken, user, is_admin } = action.data;
       return {
         authenticated: true,
         accessToken: accessToken,
+        user: user,
+        is_admin: is_admin,
       };
     case "LOGOUT":
       return initialState;
