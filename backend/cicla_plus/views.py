@@ -105,12 +105,17 @@ def newAdvertisement(request):
 @csrf_exempt
 def updateTransaction(request):
     if request.method == 'POST':
-        transaction = Transaction.objects.filter(id=request.POST.get('id'), token=request.POST.get('token').upper())
+        
+        status = request.POST.get('status')
+        if status == 'de':
+            transaction = Transaction.objects.filter(id=request.POST.get('id'), token=request.POST.get('token').upper())
+        else:
+            transaction = Transaction.objects.filter(id=request.POST.get('id'))
         if transaction.count() < 1:
-            raise Exception("Id/Token not found")
+            raise Exception("Transaction not found")
         else:
             transaction.update(
-                status=request.POST.get('status'),
+                status=status,
                 last_update=datetime.now()
             )
 
