@@ -26,7 +26,7 @@ urlpatterns = [
     re_path(r'^static/(?P<path>.*)$', serve,{'document_root': os.path.join(BASE_DIR, 'static')}), 
     path('admin/', admin.site.urls),
     path('register/person/', registerPerson, name='registerPerson'),
-    path('register/person/', registerPerson, name='registerPerson'),
+    path('register/company/', registerCompany, name='registerCompany'),
     path('newtransaction/', newTransaction, name='newTransaction'),
     path('newadvertisement/', newAdvertisement, name='newAdvertisement'),
     path('updatetransaction/', updateTransaction, name='updateTransaction'),
