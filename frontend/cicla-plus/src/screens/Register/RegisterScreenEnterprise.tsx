@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Input, Option, Select } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
-import { validateField } from "./RegisterUtils";
+import { validateField } from "../validation-utils";
 
 export default function RegisterScreen() {
   const [email, setEmail] = useState("");
