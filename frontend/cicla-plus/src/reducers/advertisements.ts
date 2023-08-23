@@ -58,11 +58,19 @@ export default function advertisements(
       };
     }
     case "DELETE_ADVERTISEMENT": {
+      const advertisementToEdit = state.advertisements.find(
+        (a) => a.id === action.data
+      );
+
+      if (!advertisementToEdit) return state;
+
+      advertisementToEdit.is_deleted = true;
+
       return {
         ...state,
-        advertisements: state.advertisements.filter(
-          (a) => a.id !== action.data
-        ),
+        advertisements: state.advertisements
+          .filter((a) => a.id !== action.data)
+          .concat(advertisementToEdit),
       };
     }
     case "NEW_ADVERTISEMENT": {

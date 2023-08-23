@@ -2,7 +2,9 @@ import { getAdvertisements } from "../api/getAdvertisements";
 import { postDeleteAdvertisement } from "../api/postDeleteAdvertisement";
 import { postNewAdvertisement } from "../api/postNewAdvertisement";
 import { postToggleVisibility } from "../api/postToggleVisibility";
+import { store } from "../store/configureStore";
 import Result from "../types/Result";
+import { postUpdateTransactionAction } from "./transactions";
 import { ThunkAction } from "./types";
 
 export function getAdvertisementsAction(): ThunkAction<Promise<void>> {
@@ -51,6 +53,22 @@ export function deleteAdvertisementAction(
       }
 
       dispatch({ type: "DELETE_ADVERTISEMENT", data: id });
+
+      const transactionsState = store.getState().transactions;
+
+      if (transactionsState.tag === "LOADED") {
+        const transaction = transactionsState.transactions
+          .sort(
+            (a, b) =>
+              new Date(a.last_update).getTime() -
+              new Date(b.last_update).getTime()
+          )
+          .find((t) => t.advertisement.id === id);
+
+        if (transaction) {
+          dispatch(postUpdateTransactionAction(transaction, "ca"));
+        }
+      }
       return Result.ok({});
     } catch {
       return Result.err({});
@@ -70,7 +88,16 @@ export function NewAdvertisementAction(
 ): ThunkAction<Promise<Result.Result<{}, {}>>> {
   return async (dispatch) => {
     try {
-      const result = await postNewAdvertisement({ material_description, material_type, quantity, acceptance_condition, profit_type, times_viewed, hidden, company });
+      const result = await postNewAdvertisement({
+        material_description,
+        material_type,
+        quantity,
+        acceptance_condition,
+        profit_type,
+        times_viewed,
+        hidden,
+        company,
+      });
 
       if (!result.ok) {
         return Result.err({});
