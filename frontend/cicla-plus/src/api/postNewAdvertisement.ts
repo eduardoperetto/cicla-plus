@@ -1,16 +1,18 @@
 import Result from "../types/Result";
 import { api } from "./apiConfig";
 import { handleError } from "./handleError";
+import { companySchema } from "../types/Company";
+import { materialSchema } from "../types/Material";
 
 export async function postNewAdvertisement(data: {
-  material_description: any;
-  material_type: any;
-  quantity: any;
-  acceptance_condition: any;
-  profit_type: any;
-  times_viewed: any;
-  hidden: any;
-  company: any;
+  material_description: string;
+  material_type: typeof materialSchema;
+  quantity: number;
+  acceptance_condition: string;
+  profit_type: string;
+  times_viewed: number;
+  hidden: boolean;
+  company: typeof companySchema;
 }): Promise<Result.Result<{}, { message: string }>> {
   const formData = new FormData();
   formData.append("material_description", data.material_description.toString());
