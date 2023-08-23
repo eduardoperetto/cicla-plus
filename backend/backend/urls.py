@@ -19,6 +19,7 @@ router.register('person', PersonViewSet)
 router.register('company', CompanyViewSet)
 router.register('advertisement', AdvertisementViewSet)
 router.register('transaction', TransactionViewSet)
+router.register('mydata', UserDataViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),

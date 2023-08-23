@@ -1,4 +1,4 @@
-from rest_framework import viewsets, permissions, status, authentication
+from rest_framework import viewsets, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.core.serializers import serialize
@@ -6,7 +6,6 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import *
 from .serializers import *
-from rest_framework import generics
 import random, string
 from datetime import datetime
 
@@ -25,6 +24,17 @@ class AdvertisementViewSet(viewsets.ModelViewSet):
 class TransactionViewSet(viewsets.ModelViewSet):
     serializer_class = TransactionSerializer
     queryset = Transaction.objects.all()
+
+class UserDataViewSet(viewsets.ModelViewSet):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+    basename = "mydata"
+    
+    def get_queryset(self):
+        authenticated_user = self.request.user
+        queryset = User.objects.filter(id=authenticated_user.id)
+        return queryset
 
 @csrf_exempt
 def registerPerson(request):
