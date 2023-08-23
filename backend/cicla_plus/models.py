@@ -39,6 +39,7 @@ class Advertisement(models.Model):
     company = models.ForeignKey('Company', on_delete=models.CASCADE)
     hidden = models.BooleanField()
     is_deleted = models.BooleanField(default=False)
+    is_finished = models.BooleanField(default=False)
 
 class Transaction(models.Model):
     advertisement = models.ForeignKey('Advertisement', on_delete=models.CASCADE)

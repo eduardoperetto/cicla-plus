@@ -119,6 +119,9 @@ def updateTransaction(request):
         status = request.POST.get('status')
         if status == 'de':
             transaction = Transaction.objects.filter(id=request.POST.get('id'), token=request.POST.get('token').upper())
+            advertisement = transaction.first().advertisement
+            advertisement.is_finished = True
+            advertisement.save()
         else:
             transaction = Transaction.objects.filter(id=request.POST.get('id'))
         if transaction.count() < 1:
