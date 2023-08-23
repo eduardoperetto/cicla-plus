@@ -41,7 +41,7 @@ export default function AdvertisementsScreen() {
     );
 
   const advertisements = advertisementsState.advertisements.filter(
-    (a) => !a.hidden
+    (a) => !a.hidden && !a.is_deleted && !a.is_finished
   );
   const companies = companiesState.companies;
 

@@ -38,7 +38,8 @@ export default function MyAdvertisementScreen() {
     );
 
   const advertisements = advertisementsState.advertisements.filter(
-    (a) => a.company.user.username === username
+    (a) =>
+      a.company.user.username === username && !a.is_deleted && !a.is_finished
   );
 
   return (
