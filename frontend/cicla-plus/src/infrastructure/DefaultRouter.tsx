@@ -6,9 +6,11 @@ import { store } from "../store/configureStore";
 import AccountScreen from "../screens/AccountScreen";
 import LoginScreen from "../screens/LoginScreen";
 import HomeScreen from "../screens/HomeScreen";
-import RegisterScreenPerson from "../screens/RegisterScreenPerson";
-import RegisterScreenEnterprise from "../screens/RegisterScreenEnterprise";
+import RegisterScreenPerson from "../screens/Register/RegisterScreenPerson";
+import RegisterScreenEnterprise from "../screens/Register/RegisterScreenEnterprise";
 import AdvertisementsScreen from "../screens/Advertisement/AdvertisementsScreen";
+import TransactionScreen from "../screens/TransactionScreen";
+import MyAdvertisementScreen from "../screens/MyAdvertisementScreen";
 
 export function DefaultRouter() {
   return (
@@ -59,6 +61,22 @@ export function DefaultRouter() {
         element={
           <AuthRoute>
             <AccountScreen />
+          </AuthRoute>
+        }
+        />
+        <Route
+        path="/transactions"
+        element={
+          <AuthRoute>
+            <TransactionScreen />
+          </AuthRoute>
+        }
+        />
+        <Route
+        path="/my-advertisements"
+        element={
+          <AuthRoute>
+            <MyAdvertisementScreen />
           </AuthRoute>
         }
         />

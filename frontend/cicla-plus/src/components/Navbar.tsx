@@ -3,6 +3,7 @@ import {
   GlobeAmericasIcon,
   HomeIcon,
   UserIcon,
+  Square3Stack3DIcon,
 } from "@heroicons/react/24/outline";
 import {
   Typography,
@@ -27,6 +28,19 @@ const navListItems = [
     icon: GlobeAmericasIcon,
     path: "/advertisements",
   },
+
+  {
+    label: "Transações",
+    icon: Square3Stack3DIcon,
+    path: "/transactions",
+  },
+
+  {
+    label: "Meus anúncios",
+    icon: Square3Stack3DIcon,
+    path: "/my-advertisements",
+  },
+
   {
     label: "Conta",
     icon: UserIcon,

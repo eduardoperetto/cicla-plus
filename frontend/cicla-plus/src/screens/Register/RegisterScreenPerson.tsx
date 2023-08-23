@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, Input, Option, Select } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
+import { validateField } from "../validation-utils";
 
 export default function RegisterScreen() {
   const [email, setEmail] = useState("");
@@ -24,40 +25,8 @@ export default function RegisterScreen() {
   const [cep, setCep] = useState("");
   const [cepError, SetCepError] = useState("");
 
-  const validateField = (value: any, type: string, setErrorFunction: any, errorMessage: string, setFunc: any) => {
-    let regex: RegExp;
-    switch (type) {
-      case "email":
-        regex = /^$|^[a-zA-Z0-9._-]+@([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$/;
-        break;
-      case "sobrenome":
-        regex = /^$|^[a-zA-Z ]{2,}$/;
-        break;
-      case "nome":
-        regex = /^$|^[a-zA-Z ]{2,}$/;
-        break;
-      case "rua":
-        regex = /^$|^[a-zA-Z0-9 ]{3,}$/;
-        break;
-      case "cidade":
-        regex = /^$|^[a-zA-Z ]{3,}$/;
-        break;
-      case "bairro":
-        regex = /^$|^[a-zA-Z ]{3,}$/;
-        break;
-      case "cep":
-        regex = /^$|^[0-9\-]{8}$/;
-        break;
-    }
-
-    if (!regex!.test(value)) {
-      setErrorFunction(errorMessage);
-    } else {
-      setErrorFunction("");
-    }
-
-    setFunc(value);
-  };
+  const [cpf, setCPF] = useState("");
+  const [CPFError, setCPFError] = useState("");
 
   return (
     <div className="flex w-screen h-screen justify-center items-center">
@@ -98,18 +67,44 @@ export default function RegisterScreen() {
 
               <div className="sm:col-span-3">
                 <Input size="md" label="CPF"
+                  value={cpf}
+                  onChange={(e) => validateField(e.target.value, "cpf", setCPFError, "CPF inválido", setCPF)}
                 />
-                </div>
+                {CPFError && (
+                  <span className="text-red-500 text-sm">{CPFError}</span>
+                )}
+              </div>
 
               <div className="sm:col-span-2">
                 <Select label="Estado">
-                  <Option> </Option>
-                  <Option>RS</Option>
-                  <Option>SC</Option>
-                  <Option>PR</Option>
-                  <Option>RJ</Option>
-                  <Option>SP</Option>
+                <Option> </Option>
+                  <Option>AC</Option>
+                  <Option>AL</Option>
+                  <Option>AP</Option>
+                  <Option>AM</Option>
+                  <Option>BA</Option>
+                  <Option>CE</Option>
+                  <Option>DF</Option>
+                  <Option>ES</Option>
+                  <Option>GO</Option>
+                  <Option>MA</Option>
+                  <Option>MT</Option>
+                  <Option>MS</Option>
                   <Option>MG</Option>
+                  <Option>PA</Option>
+                  <Option>PB</Option>
+                  <Option>PR</Option>
+                  <Option>PE</Option>
+                  <Option>PI</Option>
+                  <Option>RJ</Option>
+                  <Option>RN</Option>
+                  <Option>RS</Option>
+                  <Option>RO</Option>
+                  <Option>RR</Option>
+                  <Option>SC</Option>
+                  <Option>SP</Option>
+                  <Option>SE</Option>
+                  <Option>TO</Option>
                 </Select>
               </div>
 
@@ -162,27 +157,27 @@ export default function RegisterScreen() {
             </div>
           </div>
         </div>
-    <div className="mt-6 flex items-center justify-end">
-      <Link to="/login">
-        <Button
-          variant="text"
-          color="red"
-          className="mr-1"
-          size="sm"
-        >
-          Cancelar
-        </Button>
-      </Link>
-      <Link to="/login">
-        <Button
-          color="green"
-          variant="gradient"
-          size="sm">
-          Confirmar
-        </Button>
-      </Link>
-    </div>
-    </form >
+        <div className="mt-6 flex items-center justify-end">
+          <Link to="/login">
+            <Button
+              variant="text"
+              color="red"
+              className="mr-1"
+              size="sm"
+            >
+              Cancelar
+            </Button>
+          </Link>
+          <Link to="/login">
+            <Button
+              color="green"
+              variant="gradient"
+              size="sm">
+              Confirmar
+            </Button>
+          </Link>
+        </div>
+      </form >
     </div >
   );
 }
