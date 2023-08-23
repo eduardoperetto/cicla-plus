@@ -19,6 +19,7 @@ import { Transaction } from "../types/Transaction";
 import { materialTypeToString } from "../utils/material";
 import { statusToColor, statusToString } from "../utils/status";
 import { TransactionDialog } from "./Transaction/TransactionDialog";
+import { postUpdateTransactionAction } from "../actions/transactions";
 
 const TransactionScreen = () => {
   const username = store.getState().login.user;
@@ -94,7 +95,21 @@ export function TransactionListItem({
             variant="filled"
             color="red"
             className="flex"
-            onClick={async () => {}}
+            onClick={async () => {
+              const result = await dispatch(
+                postUpdateTransactionAction(transaction, "cs")
+              );
+
+              if (!result.ok) {
+                alert(
+                  "Ocorreu um erro ao processar sua solicitação, por favor tente novamente."
+                );
+                return;
+              }
+
+              alert("Pedido cancelado com sucesso!");
+              window.location.reload();
+            }}
           >
             Cancelar
           </Button>

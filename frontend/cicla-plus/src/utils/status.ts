@@ -31,3 +31,20 @@ export function statusToColor(status: string) {
       return undefined;
   }
 }
+
+export function statusToHidden(status: string) {
+  switch (status) {
+    case "og":
+      return "green";
+    case "de":
+      return "blue";
+    case "ca":
+      return "red";
+    case "cm":
+      return "red";
+    case "cs":
+      return "red";
+    default:
+      return undefined;
+  }
+}

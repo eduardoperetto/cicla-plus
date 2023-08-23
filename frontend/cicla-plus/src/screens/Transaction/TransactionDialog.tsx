@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Alert,
   Button,
   Chip,
   Dialog,
@@ -33,6 +34,13 @@ export function TransactionDialog({
         Doação de {transaction.advertisement.material_description}
       </DialogHeader>
       <DialogBody divider>
+        <Alert color="amber" variant="ghost">
+          O token a seguir deve ser fornecido ao anunciante no momento da
+          entrega do material, ele será usado para confirmação do recebimento.
+        </Alert>
+        <Typography variant="h5" color="blue-gray" className="mb-2">
+          Token: <span className="font-normal"> {transaction.token}</span>
+        </Typography>
         <Typography variant="h5" color="blue-gray" className="mb-2">
           Anunciante:{" "}
           <span className="font-normal">

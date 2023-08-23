@@ -15,10 +15,7 @@ export const transactionSchema = z.object({
   id: z.number(),
   advertisement: advertisementSchema,
   user: personSchema,
-  // z.union([
-  //   personSchema
-  //   companySchema
-  // ]),
+  token: z.string(),
   status: statusSchema,
   last_update: z.string(),
   created_at: z.string(),

@@ -16,6 +16,9 @@ export type TransactionsAction =
   | { type: "GET_TRANSACTION_OK"; data: Transaction[] }
   | {
       type: "POST_NEW_TRANSACTION";
+    }
+  | {
+      type: "UPDATE_TRANSACTION";
     };
 
 const initialState: TransactionsState = { tag: "UNLOADED" };
@@ -42,6 +45,8 @@ export default function transactions(
 
   switch (action.type) {
     case "POST_NEW_TRANSACTION":
+      return state;
+    case "UPDATE_TRANSACTION":
       return state;
     default:
       return state;

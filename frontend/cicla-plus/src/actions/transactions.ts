@@ -1,8 +1,11 @@
 import { getAdvertisements } from "../api/getAdvertisements";
 import { getTransactions } from "../api/getTransactions";
 import { postNewTransaction } from "../api/postNewTransaction";
+import { postUpdateTransaction } from "../api/postUpdateTransaction";
 import { store } from "../store/configureStore";
 import Result from "../types/Result";
+import { Transaction } from "../types/Transaction";
+import { toggleVisibilityAction } from "./advertisements";
 import { ThunkAction } from "./types";
 
 export function getTransactionsAction(): ThunkAction<Promise<void>> {
@@ -55,6 +58,60 @@ export function postNewTransactionAction(
 
       dispatch({ type: "POST_NEW_TRANSACTION" });
       await dispatch(getTransactionsAction);
+      await dispatch(getAdvertisements);
+      return Result.ok({});
+    } catch {
+      return Result.err({});
+    }
+  };
+}
+
+export function postUpdateTransactionAction(
+  transaction: Transaction,
+  status: string
+): ThunkAction<Promise<Result.Result<{}, {}>>> {
+  return async (dispatch) => {
+    try {
+      const result = await postUpdateTransaction({
+        id: transaction.id,
+        status: status,
+      });
+
+      if (!result.ok) {
+        return Result.err({});
+      }
+
+      dispatch({ type: "UPDATE_TRANSACTION" });
+      await dispatch(getTransactions);
+      await dispatch(
+        toggleVisibilityAction(transaction.advertisement.id, status !== "cs")
+      );
+      await dispatch(getAdvertisements);
+      return Result.ok({});
+    } catch {
+      return Result.err({});
+    }
+  };
+}
+
+export function postFinishTransactionAction(
+  transaction: Transaction,
+  token: string
+): ThunkAction<Promise<Result.Result<{}, {}>>> {
+  return async (dispatch) => {
+    try {
+      const result = await postUpdateTransaction({
+        id: transaction.id,
+        status: "de",
+        token,
+      });
+
+      if (!result.ok) {
+        return Result.err({});
+      }
+
+      dispatch({ type: "UPDATE_TRANSACTION" });
+      await dispatch(getTransactions);
       await dispatch(getAdvertisements);
       return Result.ok({});
     } catch {
