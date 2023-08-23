@@ -23,12 +23,14 @@ class CompanySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class AdvertisementSerializer(serializers.ModelSerializer):
+    company = CompanySerializer(read_only=True)
     class Meta:
         model = Advertisement
         fields = '__all__'
         depth = 2
 
 class TransactionSerializer(serializers.ModelSerializer):
+    user = PersonSerializer(read_only=True)
     class Meta:
         model = Transaction
         fields = '__all__'
