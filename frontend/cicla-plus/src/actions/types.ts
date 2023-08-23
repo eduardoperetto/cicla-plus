@@ -1,7 +1,8 @@
 import { AdvertisementsAction } from "../reducers/advertisements";
 import { CompaniesAction } from "../reducers/companies";
 import { LoginAction } from "../reducers/login";
-import { TransactionsAction } from "../reducers/transcations";
+import { PersonsAction } from "../reducers/persons";
+import { TransactionsAction } from "../reducers/transactions";
 import { RootState } from "../store/configureStore";
 
 export type GetState = () => RootState;
@@ -16,4 +17,5 @@ export type Action =
   | LoginAction
   | AdvertisementsAction
   | CompaniesAction
-  | TransactionsAction;
+  | TransactionsAction
+  | PersonsAction;

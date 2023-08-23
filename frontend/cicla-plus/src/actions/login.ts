@@ -19,7 +19,7 @@ export function loginAction(
       data: {
         accessToken: "foo",
         authenticated: true,
-        user: "coca-cola",
+        user: "eu",
         is_admin: false,
       },
     });

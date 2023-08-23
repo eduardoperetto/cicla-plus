@@ -13,7 +13,10 @@ export type TransactionsState =
 export type TransactionsAction =
   | { type: "GET_TRANSACTION_ERROR" }
   | { type: "GET_TRANSACTION_LOADING" }
-  | { type: "GET_TRANSACTION_OK"; data: Transaction[] };
+  | { type: "GET_TRANSACTION_OK"; data: Transaction[] }
+  | {
+      type: "POST_NEW_TRANSACTION";
+    };
 
 const initialState: TransactionsState = { tag: "UNLOADED" };
 
@@ -37,7 +40,12 @@ export default function transactions(
     }
   }
 
-  return state;
+  switch (action.type) {
+    case "POST_NEW_TRANSACTION":
+      return state;
+    default:
+      return state;
+  }
 }
 
 export const TransactionState = (store: RootState) => store.transactions;

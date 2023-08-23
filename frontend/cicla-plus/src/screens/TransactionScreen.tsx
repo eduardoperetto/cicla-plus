@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import {
   TransactionState,
   isTransactionsLoading,
-} from "../reducers/transcations";
+} from "../reducers/transactions";
 import { Spinner, Typography } from "@material-tailwind/react";
 import { store } from "../store/configureStore";
 
