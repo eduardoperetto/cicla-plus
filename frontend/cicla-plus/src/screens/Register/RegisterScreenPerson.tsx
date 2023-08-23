@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { Button, Input, Option, Select } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import { validateField } from "../validation-utils";
+import { RegisterPersonAction } from "../../actions/persons";
+import { useDispatch } from "../../store/configureStore";
 
 export default function RegisterScreen() {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
 
@@ -27,6 +30,32 @@ export default function RegisterScreen() {
 
   const [cpf, setCPF] = useState("");
   const [CPFError, setCPFError] = useState("");
+
+  const handleConfirm = async () => {
+    const phone = "323412412";
+    const birthdate = "2013-09-02"
+
+    const result = await dispatch(
+      RegisterPersonAction(
+        email,
+        email,
+        nome,
+        sobrenome,
+        "lalala",
+        "lalala",
+        rua,
+        phone,
+        cpf,
+        birthdate
+      )
+    );
+    if (!result.ok) {
+      alert("Ocorreu um erro, por favor tente novamente");
+      return;
+    }
+
+    alert("Operação bem sucedida!");
+  }
 
   return (
     <div className="flex w-screen h-screen justify-center items-center">
@@ -168,14 +197,13 @@ export default function RegisterScreen() {
               Cancelar
             </Button>
           </Link>
-          <Link to="/login">
-            <Button
-              color="green"
-              variant="gradient"
-              size="sm">
-              Confirmar
-            </Button>
-          </Link>
+          <Button
+            color="green"
+            variant="gradient"
+            size="sm"
+            onClick={handleConfirm}>
+            Confirmar
+          </Button>
         </div>
       </form >
     </div >
