@@ -1,5 +1,6 @@
 import { getAdvertisements } from "../api/getAdvertisements";
 import { postDeleteAdvertisement } from "../api/postDeleteAdvertisement";
+import { postNewAdvertisement } from "../api/postNewAdvertisement";
 import { postToggleVisibility } from "../api/postToggleVisibility";
 import Result from "../types/Result";
 import { ThunkAction } from "./types";
@@ -50,6 +51,33 @@ export function deleteAdvertisementAction(
       }
 
       dispatch({ type: "DELETE_ADVERTISEMENT", data: id });
+      return Result.ok({});
+    } catch {
+      return Result.err({});
+    }
+  };
+}
+
+export function NewAdvertisementAction(
+  material_description: any,
+  material_type: any,
+  quantity: any,
+  acceptance_condition: any,
+  profit_type: any,
+  times_viewed: any,
+  hidden: any,
+  company: any
+): ThunkAction<Promise<Result.Result<{}, {}>>> {
+  return async (dispatch) => {
+    try {
+      const result = await postNewAdvertisement({ material_description, material_type, quantity, acceptance_condition, profit_type, times_viewed, hidden, company });
+
+      if (!result.ok) {
+        return Result.err({});
+      }
+
+      dispatch({ type: "NEW_ADVERTISEMENT" });
+      await dispatch(getAdvertisements);
       return Result.ok({});
     } catch {
       return Result.err({});

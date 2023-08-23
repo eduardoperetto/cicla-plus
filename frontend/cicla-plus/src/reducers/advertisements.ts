@@ -15,7 +15,8 @@ export type AdvertisementsAction =
   | { type: "GET_ADVERTISEMENTS_LOADING" }
   | { type: "GET_ADVERTISEMENTS_OK"; data: Advertisement[] }
   | { type: "TOGGLE_VISIBILITY"; data: { id: number; hidden: boolean } }
-  | { type: "DELETE_ADVERTISEMENT"; data: number };
+  | { type: "DELETE_ADVERTISEMENT"; data: number }
+  | { type: "NEW_ADVERTISEMENT" };
 
 const initialState: AdvertisementsState = { tag: "UNLOADED" };
 
@@ -63,6 +64,9 @@ export default function advertisements(
           (a) => a.id !== action.data
         ),
       };
+    }
+    case "NEW_ADVERTISEMENT": {
+      return state;
     }
     default:
       return state;
