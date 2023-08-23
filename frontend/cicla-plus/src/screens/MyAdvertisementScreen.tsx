@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import {
   AdvertisementState,
@@ -21,6 +21,7 @@ import {
   deleteAdvertisementAction,
   toggleVisibilityAction,
 } from "../actions/advertisements";
+import { AdvertisementDialog } from "./Advertisement/AdvertisementDialog";
 
 export default function MyAdvertisementScreen() {
   const username = store.getState().login.user;
@@ -64,6 +65,10 @@ export function AdvertisementListItem({
 }) {
   const dispatch = useDispatch();
 
+  const [openDialog, setOpenDialog] = useState(false);
+
+  const handleOpenDialog = () => setOpenDialog(!openDialog);
+
   return (
     <>
       <ListItem ripple={false} className="py-1 pr-1 pl-4">
@@ -71,6 +76,14 @@ export function AdvertisementListItem({
           " - " +
           advertisement.material_description}
         <ListItemSuffix className="flex">
+          <Button
+            variant="filled"
+            color="blue-gray"
+            className="flex mr-4"
+            onClick={handleOpenDialog}
+          >
+            Ver detalhes
+          </Button>
           <Button
             variant="filled"
             color="blue-gray"
@@ -117,6 +130,13 @@ export function AdvertisementListItem({
           </Button>
         </ListItemSuffix>
       </ListItem>
+
+      <AdvertisementDialog
+        isInteractive={false}
+        openDialog={openDialog}
+        handleOpenDialog={handleOpenDialog}
+        advertisement={advertisement}
+      />
     </>
   );
 }

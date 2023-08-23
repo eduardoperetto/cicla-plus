@@ -15,10 +15,12 @@ export function AdvertisementDialog({
   advertisement,
   openDialog,
   handleOpenDialog,
+  isInteractive = true,
 }: {
   advertisement: Advertisement;
   openDialog: boolean;
   handleOpenDialog: () => void;
+  isInteractive?: boolean;
 }) {
   const dispatch = useDispatch();
 
@@ -60,30 +62,32 @@ export function AdvertisementDialog({
         >
           <span>Fechar</span>
         </Button>
-        <Button
-          variant="gradient"
-          color="green"
-          onClick={async () => {
-            handleOpenDialog();
+        {isInteractive && (
+          <Button
+            variant="gradient"
+            color="green"
+            onClick={async () => {
+              handleOpenDialog();
 
-            const result = await dispatch(
-              postNewTransactionAction(advertisement.id)
-            );
-
-            if (!result.ok) {
-              alert(
-                "Ocorreu um erro ao realizar a solicitação, por favor tente novamente."
+              const result = await dispatch(
+                postNewTransactionAction(advertisement.id)
               );
-              return;
-            }
 
-            alert(
-              "Pedido realizado com sucesso! Você pode acessar a aba 'Transações' para ver os detalhes."
-            );
-          }}
-        >
-          <span>Doar</span>
-        </Button>
+              if (!result.ok) {
+                alert(
+                  "Ocorreu um erro ao realizar a solicitação, por favor tente novamente."
+                );
+                return;
+              }
+
+              alert(
+                "Pedido realizado com sucesso! Você pode acessar a aba 'Transações' para ver os detalhes."
+              );
+            }}
+          >
+            <span>Doar</span>
+          </Button>
+        )}
       </DialogFooter>
     </Dialog>
   );
