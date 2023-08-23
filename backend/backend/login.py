@@ -1,14 +1,15 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
+from cicla_plus.models import Company
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
-        # The default result (access/refresh tokens)
         data = super(CustomTokenObtainPairSerializer, self).validate(attrs)
-        # Custom data you want to include
+        user_id = self.user.id
+        is_company = Company.objects.filter(user_id=user_id).count() > 0
         data.update({'user': self.user.username})
         data.update({'is_admin': self.user.is_staff})
-        # and everything else you want to send in the response
+        data.update({'is_company': is_company})
         return data
 
 class CustomTokenObtainPairView(TokenObtainPairView):
