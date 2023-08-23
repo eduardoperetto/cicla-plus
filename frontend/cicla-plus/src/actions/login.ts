@@ -1,3 +1,5 @@
+import { postLogin } from "../api/postLogin";
+import Result from "../types/Result";
 import { ThunkAction } from "./types";
 
 export type LoginRequest = {
@@ -5,24 +7,33 @@ export type LoginRequest = {
   password: string;
 };
 
-export type LoginResponse = {
-  access_token: string;
-  token_type: "Bearer";
-};
-
 export function loginAction(
   loginData: LoginRequest
-): ThunkAction<Promise<void>> {
+): ThunkAction<Promise<Result.Result<{}, {}>>> {
   return async (dispatch) => {
-    dispatch({
-      type: "LOGIN",
-      data: {
-        accessToken: "foo",
-        authenticated: true,
-        user: "eu",
-        is_admin: false,
-      },
-    });
+    try {
+      const result = await postLogin(loginData);
+
+      if (!result.ok) {
+        return Result.err({});
+      }
+
+      const loginResult = result.value;
+
+      dispatch({
+        type: "LOGIN",
+        data: {
+          accessToken: loginResult.access,
+          authenticated: true,
+          user: loginResult.user,
+          is_admin: loginResult.is_admin,
+        },
+      });
+
+      return Result.ok({});
+    } catch {
+      return Result.err({});
+    }
   };
 }
 

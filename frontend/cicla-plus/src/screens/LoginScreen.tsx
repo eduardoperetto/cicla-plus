@@ -6,11 +6,9 @@ import {
   DialogHeader,
   DialogBody,
   DialogFooter,
-  Radio,
-  Collapse,
 } from "@material-tailwind/react";
 import { useDispatch } from "../store/configureStore";
-import { loginAction } from "../actions/login";
+import { LoginRequest, loginAction } from "../actions/login";
 import { Link } from "react-router-dom";
 
 export default function LoginScreen() {
@@ -18,7 +16,11 @@ export default function LoginScreen() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [fornecedorSelected, setFornecedorSelected] = useState(false);
   const [anuncianteSelected, setAnuncianteSelected] = useState(false);
-  const [tipoCadastro, setTipoCadastro] = useState("");
+
+  const [loginRequest, setLoginRequest] = useState<LoginRequest>({
+    username: "",
+    password: "",
+  });
 
   const handleDialogOpen = () => {
     setDialogOpen(true);
@@ -38,27 +40,44 @@ export default function LoginScreen() {
     setFornecedorSelected(false);
   };
 
-  const handleTipoCadastroChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTipoCadastro(event.target.value);
-  };
-
   return (
     <div className="flex w-screen h-screen justify-center items-center">
       <div className="flex flex-col items-center gap-4">
-        <Input size="md" label="E-mail" />
-        <Input size="md" label="Senha" type="password" />
+        <Input
+          size="md"
+          label="E-mail"
+          value={loginRequest.username}
+          onChange={(e) =>
+            setLoginRequest({ ...loginRequest, username: e.target.value })
+          }
+        />
+        <Input
+          size="md"
+          label="Senha"
+          type="password"
+          value={loginRequest.password}
+          onChange={(e) =>
+            setLoginRequest({ ...loginRequest, password: e.target.value })
+          }
+        />
         <Button
           size="sm"
-          onClick={async () =>
-            await dispatch(loginAction({ username: "foo", password: "bar" }))
+          disabled={
+            loginRequest.username === "" && loginRequest.password === ""
           }
+          onClick={async () => {
+            const result = await dispatch(loginAction(loginRequest));
+
+            if (!result.ok) {
+              alert(
+                "Ocorreu um erro ao tentar fazer o login, confira o seu usuário e senha."
+              );
+            }
+          }}
         >
           Entrar
         </Button>
-        <Button
-          onClick={handleDialogOpen}
-          size="sm"
-        >
+        <Button onClick={handleDialogOpen} size="sm">
           Registrar-se
         </Button>
         <Dialog open={dialogOpen} handler={handleDialogClose}>
@@ -77,26 +96,6 @@ export default function LoginScreen() {
               >
                 Quero ser um FORNECEDOR!
               </Button>
-              {fornecedorSelected && (
-                <Collapse open={fornecedorSelected}>
-                  <div className="flex flex-col items-center">
-                  <Radio
-                      name="type"
-                      label="Pessoa Física"
-                      value="pessoa_fisica"
-                      checked={tipoCadastro === "pessoa_fisica"}
-                      onChange={handleTipoCadastroChange}
-                    />
-                    <Radio
-                      name="type"
-                      label="Pessoa Jurídica"
-                      value="pessoa_juridica"
-                      checked={tipoCadastro === "pessoa_juridica"}
-                      onChange={handleTipoCadastroChange}
-                    />
-                  </div>
-                </Collapse>
-              )}
             </div>
           </DialogBody>
           <DialogFooter>
@@ -109,7 +108,11 @@ export default function LoginScreen() {
             >
               <span>Cancelar</span>
             </Button>
-            <Link to={anuncianteSelected ? "/register-enterprise" : tipoCadastro === "pessoa_juridica" ? "/register-enterprise" : "/register-person"}>
+            <Link
+              to={
+                anuncianteSelected ? "/register-enterprise" : "/register-person"
+              }
+            >
               <Button
                 variant="gradient"
                 color="green"
