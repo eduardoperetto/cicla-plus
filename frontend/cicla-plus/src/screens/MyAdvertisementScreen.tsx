@@ -1,16 +1,122 @@
-import React from 'react'
+import React from "react";
+import { useSelector } from "react-redux";
+import {
+  AdvertisementState,
+  isAdvertisementsLoading,
+} from "../reducers/advertisements";
 import {
   Button,
+  Card,
+  List,
+  ListItem,
+  ListItemSuffix,
+  Spinner,
+  Typography,
 } from "@material-tailwind/react";
+import { TrashIcon, EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
+import { store, useDispatch } from "../store/configureStore";
+import { Advertisement } from "../types/Advertisement";
+import { materialTypeToString } from "../utils/material";
+import {
+  deleteAdvertisementAction,
+  toggleVisibilityAction,
+} from "../actions/advertisements";
 
-interface Props { }
+export default function MyAdvertisementScreen() {
+  const username = store.getState().login.user;
+  const advertisementsState = useSelector(AdvertisementState);
 
-const MyAdvertisementScreen = () => {
-  return <div>ISSO SÓ DEVE SER VISTO POR ANUNCIANTES
-    <div className="flex flex-col items-center gap-3">
-    <Button>Editar anúncios</Button>
-    </div>
-  </div>
+  if (isAdvertisementsLoading(advertisementsState))
+    return <Spinner className="h-12 w-12" />;
+
+  if (advertisementsState.tag === "ERROR" || username === null)
+    return (
+      <Typography color="gray" className="font-normal opacity-75">
+        Ocorreu um erro, por favor tente novamente
+      </Typography>
+    );
+
+  const advertisements = advertisementsState.advertisements.filter(
+    (a) => a.company.user.username === username
+  );
+
+  return (
+    <>
+      <br />
+      <Typography color="blue-gray" className="font-bold text-xl">
+        Meus Anúncios
+      </Typography>
+      <Card className="w-full">
+        <List>
+          {advertisements.map((a) => (
+            <AdvertisementListItem advertisement={a} />
+          ))}
+        </List>
+      </Card>
+    </>
+  );
 }
 
-export default MyAdvertisementScreen
+export function AdvertisementListItem({
+  advertisement,
+}: {
+  advertisement: Advertisement;
+}) {
+  const dispatch = useDispatch();
+
+  return (
+    <>
+      <ListItem ripple={false} className="py-1 pr-1 pl-4">
+        {materialTypeToString(advertisement.material_type) +
+          " - " +
+          advertisement.material_description}
+        <ListItemSuffix className="flex">
+          <Button
+            variant="filled"
+            color="blue-gray"
+            className="flex mr-4"
+            onClick={async () => {
+              const result = await dispatch(
+                toggleVisibilityAction(advertisement.id, !advertisement.hidden)
+              );
+
+              if (!result.ok) {
+                alert("Ocorreu um erro, por favor tente novamente");
+                return;
+              }
+
+              alert("Operação bem sucedida!");
+            }}
+          >
+            {React.createElement(
+              advertisement.hidden ? EyeIcon : EyeSlashIcon,
+              { className: "h-[18px] w-[18px] mr-2" }
+            )}{" "}
+            {advertisement.hidden ? "Mostrar" : "Esconder"}
+          </Button>
+          <Button
+            variant="filled"
+            color="red"
+            className="flex"
+            onClick={async () => {
+              const result = await dispatch(
+                deleteAdvertisementAction(advertisement.id)
+              );
+              if (!result.ok) {
+                alert("Ocorreu um erro, por favor tente novamente");
+                return;
+              }
+
+              alert("Operação bem sucedida!");
+            }}
+          >
+            {React.createElement(TrashIcon, {
+              className: "h-[18px] w-[18px] mr-2",
+            })}{" "}
+            {"Excluir"}
+          </Button>
+        </ListItemSuffix>
+      </ListItem>
+    </>
+  );
+}

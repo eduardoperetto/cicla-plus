@@ -40,7 +40,9 @@ export default function AdvertisementsScreen() {
       </Typography>
     );
 
-  const advertisements = advertisementsState.advertisements;
+  const advertisements = advertisementsState.advertisements.filter(
+    (a) => !a.hidden
+  );
   const companies = companiesState.companies;
 
   const filteredAds = advertisements.filter(
