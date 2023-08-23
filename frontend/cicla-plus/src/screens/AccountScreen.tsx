@@ -2,11 +2,18 @@ import React, { useState } from "react";
 import  
 { 
   Button,
-  Input
+  Input,
+  Dialog,
+  DialogHeader,
+  DialogBody,
+  DialogFooter,
 } from "@material-tailwind/react";
+import { useDispatch } from "../store/configureStore";
+import { logoutAction } from "../actions/login";
 
 export default function UserProfile() {
   const [isEditing, setIsEditing] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -17,15 +24,31 @@ export default function UserProfile() {
     // Aqui você pode adicionar a lógica para salvar os dados atualizados no backend
   };
 
+  const handleDialogOpen = () => {
+    setDialogOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+  };
+
+  const dispatch = useDispatch();
+
+  const logout = async () => {
+    await dispatch(logoutAction());
+  };
+
   return (
     <div className="bg-white overflow-hidden shadow rounded-lg border">
-      <div className="px-4 py-5 sm:px-6">
+      <div className="flex justify-between items-center">
+        <div className="px-4 py-5 sm:px-6">
         <h3 className="text-lg leading-6 font-medium text-gray-900">
           Perfil
         </h3>
         <p className="mt-1 max-w-2xl text-sm text-gray-500">
           Informações gerais
         </p>
+        </div>
       </div>
       <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
         <dl className="sm:divide-y sm:divide-gray-200">
@@ -98,15 +121,50 @@ export default function UserProfile() {
       </div>
       <div className="flex justify-end px-4 py-3 sm:px-6">
         {isEditing ? (
-        <Button onClick={handleSaveClick} className="mr-2 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600" color = "red">
+        <Button onClick={handleSaveClick} className="mr-2 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-green-600">
           Salvar Conta
         </Button>
         ) : (
-        <Button onClick={handleEditClick} className="mr-2 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600" color = "red">
+        <div className="flex space-x-2">
+        <Button 
+          onClick={handleEditClick} 
+          className="mr-2 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-red-600">
           Editar Conta
         </Button>
+        <Button
+          onClick={handleDialogOpen}
+          className="mr-2 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-red-600"
+        >
+          Apagar Conta
+        </Button>
+        </div>
         )}
       </div>
+       {dialogOpen &&
+       <Dialog open={dialogOpen} handler={handleDialogClose}>
+        <DialogHeader>Você tem certeza que deseja deletar seu cadastro?</DialogHeader>
+        <DialogHeader className="mt-1 max-w-2xl text-sm text-red-700">Mudanças feitas não poderão ser revertidas</DialogHeader> 
+        <DialogFooter>
+            <Button
+              variant="text"
+              color="red"
+              onClick={handleDialogClose}
+              className="mr-1"
+              size="sm"
+            >
+              <span>Cancelar</span>
+            </Button>
+            <Button
+              variant="text"
+              color="green"
+              onClick={() => logout()}
+              className="mr-1"
+              size="sm"
+            >
+              <span>Confirmar</span>
+            </Button>
+          </DialogFooter>
+        </Dialog>}
     </div>
   );
 }
