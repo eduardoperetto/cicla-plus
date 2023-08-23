@@ -77,13 +77,34 @@ export default function RegisterScreen() {
 
               <div className="sm:col-span-2">
                 <Select label="Estado">
-                  <Option> </Option>
-                  <Option>RS</Option>
-                  <Option>SC</Option>
-                  <Option>PR</Option>
-                  <Option>RJ</Option>
-                  <Option>SP</Option>
+                <Option> </Option>
+                  <Option>AC</Option>
+                  <Option>AL</Option>
+                  <Option>AP</Option>
+                  <Option>AM</Option>
+                  <Option>BA</Option>
+                  <Option>CE</Option>
+                  <Option>DF</Option>
+                  <Option>ES</Option>
+                  <Option>GO</Option>
+                  <Option>MA</Option>
+                  <Option>MT</Option>
+                  <Option>MS</Option>
                   <Option>MG</Option>
+                  <Option>PA</Option>
+                  <Option>PB</Option>
+                  <Option>PR</Option>
+                  <Option>PE</Option>
+                  <Option>PI</Option>
+                  <Option>RJ</Option>
+                  <Option>RN</Option>
+                  <Option>RS</Option>
+                  <Option>RO</Option>
+                  <Option>RR</Option>
+                  <Option>SC</Option>
+                  <Option>SP</Option>
+                  <Option>SE</Option>
+                  <Option>TO</Option>
                 </Select>
               </div>
 
