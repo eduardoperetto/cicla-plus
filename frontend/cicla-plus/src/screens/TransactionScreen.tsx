@@ -91,28 +91,30 @@ export function TransactionListItem({
           >
             Ver detalhes
           </Button>
-          <Button
-            variant="filled"
-            color="red"
-            className="flex"
-            onClick={async () => {
-              const result = await dispatch(
-                postUpdateTransactionAction(transaction, "cs")
-              );
-
-              if (!result.ok) {
-                alert(
-                  "Ocorreu um erro ao processar sua solicitação, por favor tente novamente."
+          {transaction.status === "og" && (
+            <Button
+              variant="filled"
+              color="red"
+              className="flex"
+              onClick={async () => {
+                const result = await dispatch(
+                  postUpdateTransactionAction(transaction, "cs")
                 );
-                return;
-              }
 
-              alert("Pedido cancelado com sucesso!");
-              window.location.reload();
-            }}
-          >
-            Cancelar
-          </Button>
+                if (!result.ok) {
+                  alert(
+                    "Ocorreu um erro ao processar sua solicitação, por favor tente novamente."
+                  );
+                  return;
+                }
+
+                alert("Pedido cancelado com sucesso!");
+                window.location.reload();
+              }}
+            >
+              Cancelar
+            </Button>
+          )}
         </ListItemSuffix>
       </ListItem>
 

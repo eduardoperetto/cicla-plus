@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
   GlobeAmericasIcon,
-  HomeIcon,
   UserIcon,
   Square3Stack3DIcon,
 } from "@heroicons/react/24/outline";
@@ -14,33 +13,41 @@ import {
   Navbar as MtNavbar,
 } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "../store/configureStore";
+import { store, useDispatch } from "../store/configureStore";
 import { logoutAction } from "../actions/login";
 
-const navListItems = [
-  {
-    label: "Início",
-    icon: HomeIcon,
-    path: "/",
-  },
+const personNavListItems = [
   {
     label: "Anúncios",
     icon: GlobeAmericasIcon,
     path: "/advertisements",
   },
-
   {
     label: "Transações",
     icon: Square3Stack3DIcon,
     path: "/transactions",
   },
+  {
+    label: "Conta",
+    icon: UserIcon,
+    path: "/account",
+  },
+];
 
+const companyNavListItems = [
   {
     label: "Meus anúncios",
     icon: Square3Stack3DIcon,
     path: "/my-advertisements",
   },
+  {
+    label: "Conta",
+    icon: UserIcon,
+    path: "/account",
+  },
+];
 
+const defaultNavListItems = [
   {
     label: "Conta",
     icon: UserIcon,
@@ -49,9 +56,25 @@ const navListItems = [
 ];
 
 function NavList() {
+  function getNavListItems() {
+    const loginState = store.getState().login;
+    const isAdmin = loginState.is_admin;
+    const isCompany = loginState.is_company;
+
+    if (isAdmin) {
+      return defaultNavListItems;
+    }
+
+    if (isCompany) {
+      return companyNavListItems;
+    }
+
+    return personNavListItems;
+  }
+
   return (
     <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
-      {navListItems.map(({ label, icon, path }) => (
+      {getNavListItems().map(({ label, icon, path }) => (
         <Typography
           key={label}
           variant="small"

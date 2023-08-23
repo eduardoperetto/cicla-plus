@@ -1,16 +1,17 @@
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import LoginRoute from "./LoginRoute";
-import AuthRoute from "./AuthRoute";
+import PersonRoute from "./PersonRoute";
 import { store } from "../store/configureStore";
 import AccountScreen from "../screens/AccountScreen";
 import LoginScreen from "../screens/LoginScreen";
-import HomeScreen from "../screens/HomeScreen";
 import RegisterScreenPerson from "../screens/Register/RegisterScreenPerson";
 import RegisterScreenEnterprise from "../screens/Register/RegisterScreenEnterprise";
 import AdvertisementsScreen from "../screens/Advertisement/AdvertisementsScreen";
 import TransactionScreen from "../screens/TransactionScreen";
 import MyAdvertisementScreen from "../screens/MyAdvertisementScreen";
+import CompanyRoute from "./CompanyRoute";
+import AuthRoute from "./AuthRoute";
 
 export function DefaultRouter() {
   return (
@@ -27,16 +28,16 @@ export function DefaultRouter() {
         path="/"
         element={
           <AuthRoute>
-            <HomeScreen />
+            <AccountScreen />
           </AuthRoute>
         }
       />
       <Route
         path="/advertisements"
         element={
-          <AuthRoute>
+          <PersonRoute>
             <AdvertisementsScreen />
-          </AuthRoute>
+          </PersonRoute>
         }
       />
       <Route
@@ -54,7 +55,6 @@ export function DefaultRouter() {
             <RegisterScreenEnterprise />
           </LoginRoute>
         }
-        
       />
       <Route
         path="/account"
@@ -63,23 +63,23 @@ export function DefaultRouter() {
             <AccountScreen />
           </AuthRoute>
         }
-        />
-        <Route
+      />
+      <Route
         path="/transactions"
         element={
-          <AuthRoute>
+          <PersonRoute>
             <TransactionScreen />
-          </AuthRoute>
+          </PersonRoute>
         }
-        />
-        <Route
+      />
+      <Route
         path="/my-advertisements"
         element={
-          <AuthRoute>
+          <CompanyRoute>
             <MyAdvertisementScreen />
-          </AuthRoute>
+          </CompanyRoute>
         }
-        />
+      />
 
       {/* no match route */}
       {/*https://reactrouter.com/docs/en/v6/getting-started/tutorial#adding-a-no-match-route*/}
@@ -87,7 +87,7 @@ export function DefaultRouter() {
         path="*"
         element={
           store.getState().login.authenticated ? (
-            <Navigate replace to={"/"} />
+            <Navigate replace to={"/account"} />
           ) : (
             <Navigate replace to={"/login"} />
           )

@@ -3,6 +3,7 @@ export type LoginState = {
   accessToken: string | null;
   user: string | null;
   is_admin: boolean;
+  is_company: boolean;
 };
 
 export type LoginAction =
@@ -14,6 +15,7 @@ const initialState: LoginState = {
   accessToken: null,
   user: null,
   is_admin: false,
+  is_company: false,
 };
 
 export default function login(
@@ -22,12 +24,13 @@ export default function login(
 ) {
   switch (action.type) {
     case "LOGIN":
-      var { accessToken, user, is_admin } = action.data;
+      var { accessToken, user, is_admin, is_company } = action.data;
       return {
         authenticated: true,
         accessToken: accessToken,
         user: user,
         is_admin: is_admin,
+        is_company: is_company,
       };
     case "LOGOUT":
       return initialState;

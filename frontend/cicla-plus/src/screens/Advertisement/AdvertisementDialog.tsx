@@ -83,6 +83,7 @@ export function AdvertisementDialog({
               alert(
                 "Pedido realizado com sucesso! Você pode acessar a aba 'Transações' para ver os detalhes."
               );
+              window.location.reload();
             }}
           >
             <span>Doar</span>

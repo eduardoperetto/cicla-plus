@@ -27,6 +27,7 @@ export function loginAction(
           authenticated: true,
           user: loginResult.user,
           is_admin: loginResult.is_admin,
+          is_company: loginResult.is_company,
         },
       });
 
