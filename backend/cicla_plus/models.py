@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User
+from datetime import datetime
 
 class Account(models.Model):
     User._meta.get_field('email')._unique = True
@@ -36,7 +37,17 @@ class Advertisement(models.Model):
     profit_type = models.CharField(max_length=50)
     times_viewed = models.PositiveIntegerField()
     company = models.ForeignKey('Company', on_delete=models.CASCADE)
+    hidden = models.BooleanField()
 
 class Transaction(models.Model):
     advertisement = models.ForeignKey('Advertisement', on_delete=models.CASCADE)
     user = models.ForeignKey('Person', on_delete=models.CASCADE)
+    status = models.CharField(max_length=2, choices=[
+        ("og", "Ongoing"),
+        ("de", "Delivered"),
+        ("ca", "Canceled by advertiser"),
+        ("cs", "Canceled by supplier"),
+        ("cm", "Canceled by moderation"),
+    ])
+    created_at = models.DateTimeField(auto_now=True)
+    last_update = models.DateTimeField(default=datetime.now())

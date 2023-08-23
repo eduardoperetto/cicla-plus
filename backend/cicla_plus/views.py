@@ -7,6 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import *
 from .serializers import *
 from rest_framework import generics
+from datetime import datetime
 
 class PersonViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
@@ -40,7 +41,9 @@ def registerPerson(request):
         person.save()
 
         return JsonResponse([{'Result': 'Success'}], safe=False)
-
+    else:
+        raise Exception("GET not allowed")
+    
 @csrf_exempt
 def registerCompany(request):
     if request.method == 'POST':
@@ -55,7 +58,63 @@ def registerCompany(request):
         company.save()
 
         return JsonResponse([{'Result': 'Success'}], safe=False)
+    else:
+        raise Exception("GET not allowed")
 
+@csrf_exempt
+def newTransaction(request):
+    if request.method == 'POST':
+        transaction = Transaction.objects.create(
+            user=Person.objects.get(id=request.POST.get('user')), 
+            advertisement=Advertisement.objects.get(id=request.POST.get('advertisement')),
+            status=request.POST.get('status')
+        )
+        transaction.save()
+
+        return JsonResponse([{'Result': 'Success'}], safe=False)
+    else:
+        raise Exception("GET not allowed")
+    
+@csrf_exempt
+def newAdvertisement(request):
+    if request.method == 'POST':
+        advertisement = Advertisement.objects.create(
+            material_description=request.POST.get('material_description'), 
+            material_type=request.POST.get('material_type'),
+            quantity=request.POST.get('quantity'),
+            acceptance_condition=request.POST.get('acceptance_condition'),
+            profit_type=request.POST.get('profit_type'),
+            times_viewed=request.POST.get('times_viewed'),
+            hidden=request.POST.get('hidden'),
+            company=Company.objects.get(id=request.POST.get('company')),
+        )
+        advertisement.save()
+
+        return JsonResponse([{'Result': 'Success'}], safe=False)
+    
+@csrf_exempt
+def updateTransaction(request):
+    if request.method == 'POST':
+        transaction = Transaction.objects.filter(id=request.POST.get('id'))
+        transaction.update(
+            status=request.POST.get('status'),
+            last_update=datetime.now()
+        )
+
+        return JsonResponse([{'Result': 'Success'}], safe=False)
+    else:
+        raise Exception("GET not allowed")
+
+@csrf_exempt
+def updateAdvertisement(request):
+    if request.method == 'POST':
+        advertisement = Advertisement.objects.filter(id=request.POST.get('id'))
+        advertisement.update(hidden=request.POST.get('hidden'))
+
+        return JsonResponse([{'Result': 'Success'}], safe=False)
+    else:
+        raise Exception("GET not allowed")
+    
 def createUser(request):
     if request.POST.get('password') != request.POST.get('password2'):
             raise serializers.ValidationError("Passwords must match.")

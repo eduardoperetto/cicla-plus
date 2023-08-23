@@ -54,6 +54,10 @@ REST_FRAMEWORK = {
     ),
 }
 
+SIMPLE_JWT = {
+  "TOKEN_OBTAIN_SERIALIZER": "backend.login.CustomTokenObtainPairSerializer",
+}
+
 CORS_ORIGIN_WHITELIST = tuple(environ.get('CORS_WHITELIST', default='').split(' '))
 
 ROOT_URLCONF = 'backend.urls'
