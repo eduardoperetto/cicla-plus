@@ -115,6 +115,16 @@ def updateAdvertisement(request):
     else:
         raise Exception("GET not allowed")
     
+@csrf_exempt
+def deleteAdvertisement(request):
+    if request.method == 'POST':
+        advertisement = Advertisement.objects.get(id=request.POST.get('id'))
+        advertisement.delete()
+
+        return JsonResponse([{'Result': 'Success'}], safe=False)
+    else:
+        raise Exception("GET not allowed")
+    
 def createUser(request):
     if request.POST.get('password') != request.POST.get('password2'):
             raise serializers.ValidationError("Passwords must match.")

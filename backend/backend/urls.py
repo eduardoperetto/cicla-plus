@@ -30,6 +30,7 @@ urlpatterns = [
     path('newadvertisement/', newAdvertisement, name='newAdvertisement'),
     path('updatetransaction/', updateTransaction, name='updateTransaction'),
     path('updateadvertisement/', updateAdvertisement, name='updateAdvertisement'),
+    path('deleteadvertisement/', deleteAdvertisement, name='deleteAdvertisement'),
     path('auth/login/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('auth/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('auth/verify/', TokenVerifyView.as_view(), name='token_verify'),
