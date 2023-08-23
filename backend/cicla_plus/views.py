@@ -11,7 +11,6 @@ import random, string
 from datetime import datetime
 
 class PersonViewSet(viewsets.ModelViewSet):
-    permission_classes = [permissions.IsAuthenticated]
     serializer_class = PersonSerializer
     queryset = Person.objects.all()
 
@@ -78,6 +77,9 @@ def newTransaction(request):
             token = gen_token
         )
         transaction.save()
+
+        advertisement = Advertisement.objects.filter(id=request.POST.get("advertisement"))
+        advertisement.update(hidden=True)
 
         return JsonResponse([{'Result': 'Success', 'Token': gen_token}], safe=False)
     else:

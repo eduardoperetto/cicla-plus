@@ -16,7 +16,12 @@ export function loginAction(
   return async (dispatch) => {
     dispatch({
       type: "LOGIN",
-      data: { accessToken: "foo", authenticated: true },
+      data: {
+        accessToken: "foo",
+        authenticated: true,
+        user: "eu",
+        is_admin: false,
+      },
     });
   };
 }

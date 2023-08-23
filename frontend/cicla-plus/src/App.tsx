@@ -6,6 +6,8 @@ import { DefaultRouter } from "./infrastructure/DefaultRouter";
 import { useDispatch, useSelector } from "./store/configureStore";
 import { getCompaniesAction } from "./actions/companies";
 import { getAdvertisementsAction } from "./actions/advertisements";
+import { getTransactionsAction } from "./actions/transactions";
+import { getPersonsAction } from "./actions/persons";
 
 function App() {
   const isAuthenticated = useSelector((s) => s.login.authenticated);
@@ -15,6 +17,8 @@ function App() {
     if (isAuthenticated) {
       dispatch(getCompaniesAction());
       dispatch(getAdvertisementsAction());
+      dispatch(getTransactionsAction());
+      dispatch(getPersonsAction());
     }
   }, [isAuthenticated, dispatch]);
 

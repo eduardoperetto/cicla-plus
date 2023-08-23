@@ -10,6 +10,7 @@ export const advertisementSchema = z.object({
   acceptance_condition: z.string(),
   profit_type: z.string(),
   times_viewed: z.number(),
+  hidden: z.boolean(),
   company: companySchema,
 });
 

@@ -4,11 +4,15 @@ import { Action } from "../actions/types";
 import storage from "redux-persist/lib/storage";
 import advertisements from "./advertisements";
 import companies from "./companies";
+import transactions from "./transactions";
+import persons from "./persons";
 
 const appReducer = combineReducers({
   login,
   advertisements,
   companies,
+  transactions,
+  persons,
 });
 
 export default function rootReducer(

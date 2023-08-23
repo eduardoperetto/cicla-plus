@@ -8,6 +8,8 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { Advertisement } from "../../types/Advertisement";
+import { useDispatch } from "../../store/configureStore";
+import { postNewTransactionAction } from "../../actions/transactions";
 
 export function AdvertisementDialog({
   advertisement,
@@ -18,6 +20,8 @@ export function AdvertisementDialog({
   openDialog: boolean;
   handleOpenDialog: () => void;
 }) {
+  const dispatch = useDispatch();
+
   return (
     <Dialog open={openDialog} handler={handleOpenDialog}>
       <DialogHeader>
@@ -56,7 +60,28 @@ export function AdvertisementDialog({
         >
           <span>Fechar</span>
         </Button>
-        <Button variant="gradient" color="green" onClick={handleOpenDialog}>
+        <Button
+          variant="gradient"
+          color="green"
+          onClick={async () => {
+            handleOpenDialog();
+
+            const result = await dispatch(
+              postNewTransactionAction(advertisement.id)
+            );
+
+            if (!result.ok) {
+              alert(
+                "Ocorreu um erro ao realizar a solicitação, por favor tente novamente."
+              );
+              return;
+            }
+
+            alert(
+              "Pedido realizado com sucesso! Você pode acessar a aba 'Transações' para ver os detalhes."
+            );
+          }}
+        >
           <span>Doar</span>
         </Button>
       </DialogFooter>
