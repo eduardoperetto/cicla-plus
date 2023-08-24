@@ -42,7 +42,7 @@ export default function persons(
   return state;
 }
 
-export const PersonState = (store: RootState) => store.companies;
+export const PersonState = (store: RootState) => store.persons;
 
 export const isPersonsLoading = (
   state: PersonsState
