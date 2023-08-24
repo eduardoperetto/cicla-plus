@@ -22,22 +22,36 @@ export default function RegisterScreen() {
   const [cnpj, setCNPJ] = useState("");
   const [CNPJError, setCNPJError] = useState("");
 
+  const [password, setPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [confirmPasswordError, setConfirmPasswordError] = useState("");
+
   return (
     <div className="flex w-screen h-screen justify-center items-center">
       <form>
         <div className="space-y-8">
           <div className="border-b border-gray-900/10 pb-8">
             <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-
               <div className="sm:col-span-3">
-                <Input size="md" label="Nome da Empresa"
-                />
+                <Input size="md" label="Nome da Empresa" />
               </div>
 
               <div className="sm:col-span-3">
-                <Input size="md" label="CNPJ"
+                <Input
+                  size="md"
+                  label="CNPJ"
                   value={cnpj}
-                  onChange={(e) => validateField(e.target.value, "cnpj", setCNPJError, "CNPJ inválido", setCNPJ)}
+                  onChange={(e) =>
+                    validateField(
+                      e.target.value,
+                      "cnpj",
+                      setCNPJError,
+                      "CNPJ inválido",
+                      setCNPJ
+                    )
+                  }
                 />
                 {CNPJError && (
                   <span className="text-red-500 text-sm">{CNPJError}</span>
@@ -45,9 +59,19 @@ export default function RegisterScreen() {
               </div>
 
               <div className="sm:col-span-4">
-                <Input size="md" label="E-mail"
+                <Input
+                  size="md"
+                  label="E-mail"
                   value={email}
-                  onChange={(e) => validateField(e.target.value, "email", setEmailError, "Formato de e-mail inválido", setEmail)}
+                  onChange={(e) =>
+                    validateField(
+                      e.target.value,
+                      "email",
+                      setEmailError,
+                      "Formato de e-mail inválido",
+                      setEmail
+                    )
+                  }
                 />
                 {emailError && (
                   <span className="text-red-500 text-sm">{emailError}</span>
@@ -87,9 +111,19 @@ export default function RegisterScreen() {
                 </Select>
               </div>
               <div className="col-span-full">
-                <Input size="md" label="Rua"
+                <Input
+                  size="md"
+                  label="Rua"
                   value={rua}
-                  onChange={(e) => validateField(e.target.value, "rua", setRuaError, "Rua inválida", setRua)}
+                  onChange={(e) =>
+                    validateField(
+                      e.target.value,
+                      "rua",
+                      setRuaError,
+                      "Rua inválida",
+                      setRua
+                    )
+                  }
                 />
                 {ruaError && (
                   <span className="text-red-500 text-sm">{ruaError}</span>
@@ -97,9 +131,19 @@ export default function RegisterScreen() {
               </div>
 
               <div className="sm:col-span-2 sm:col-start-1">
-                <Input size="md" label="Cidade"
+                <Input
+                  size="md"
+                  label="Cidade"
                   value={cidade}
-                  onChange={(e) => validateField(e.target.value, "cidade", setCidadeError, "Cidade inválida", setCidade)}
+                  onChange={(e) =>
+                    validateField(
+                      e.target.value,
+                      "cidade",
+                      setCidadeError,
+                      "Cidade inválida",
+                      setCidade
+                    )
+                  }
                 />
                 {cidadeError && (
                   <span className="text-red-500 text-sm">{cidadeError}</span>
@@ -107,9 +151,19 @@ export default function RegisterScreen() {
               </div>
 
               <div className="sm:col-span-2">
-                <Input size="md" label="Bairro"
+                <Input
+                  size="md"
+                  label="Bairro"
                   value={bairro}
-                  onChange={(e) => validateField(e.target.value, "bairro", setBairroError, "Bairro inválido", setBairro)}
+                  onChange={(e) =>
+                    validateField(
+                      e.target.value,
+                      "bairro",
+                      setBairroError,
+                      "Bairro inválido",
+                      setBairro
+                    )
+                  }
                 />
                 {bairroError && (
                   <span className="text-red-500 text-sm">{bairroError}</span>
@@ -117,9 +171,19 @@ export default function RegisterScreen() {
               </div>
 
               <div className="sm:col-span-2">
-                <Input size="md" label="CEP"
+                <Input
+                  size="md"
+                  label="CEP"
                   value={cep}
-                  onChange={(e) => validateField(e.target.value, "cep", SetCepError, "CEP inválido", setCep)}
+                  onChange={(e) =>
+                    validateField(
+                      e.target.value,
+                      "cep",
+                      SetCepError,
+                      "CEP inválido",
+                      setCep
+                    )
+                  }
                 />
                 {cepError && (
                   <span className="text-red-500 text-sm">{cepError}</span>
@@ -127,35 +191,69 @@ export default function RegisterScreen() {
               </div>
 
               <div className="sm:col-span-3">
-                <Input size="md" label="Senha" type="password" />
+                <Input
+                  type="password"
+                  size="md"
+                  label="Senha"
+                  value={password}
+                  onChange={(e) =>
+                    validateField(
+                      e.target.value,
+                      "password",
+                      setPasswordError,
+                      "A senha deve conter pelo menos 8 caracteres",
+                      setPassword
+                    )
+                  }
+                />
+                {passwordError && (
+                  <span className="text-red-500 text-sm">{passwordError}</span>
+                )}
               </div>
+
               <div className="sm:col-span-3">
-                <Input size="md" label="Confirmar Senha" type="password" />
+                <Input
+                  type="password"
+                  size="md"
+                  label="Confirme a Senha"
+                  value={confirmPassword}
+                  onChange={(e) =>
+                    validateField(
+                      e.target.value,
+                      "password",
+                      setConfirmPasswordError,
+                      "A senha deve conter pelo menos 8 caracteres",
+                      setConfirmPassword
+                    )
+                  }
+                />
+                {confirmPasswordError && (
+                  <span className="text-red-500 text-sm">
+                    {confirmPasswordError}
+                  </span>
+                )}
+                {password !== confirmPassword && (
+                  <span className="text-red-500 text-sm">
+                    As senhas não coincidem
+                  </span>
+                )}
               </div>
             </div>
           </div>
         </div>
         <div className="mt-6 flex items-center justify-end">
           <Link to="/login">
-            <Button
-              variant="text"
-              color="red"
-              className="mr-1"
-              size="sm"
-            >
+            <Button variant="text" color="red" className="mr-1" size="sm">
               Cancelar
             </Button>
           </Link>
           <Link to="/login">
-            <Button
-              color="green"
-              variant="gradient"
-              size="sm">
+            <Button color="green" variant="gradient" size="sm">
               Confirmar
             </Button>
           </Link>
         </div>
-      </form >
-    </div >
+      </form>
+    </div>
   );
 }

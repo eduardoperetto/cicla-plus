@@ -13,7 +13,8 @@ export type PersonsState =
 export type PersonsAction =
   | { type: "GET_PERSONS_ERROR" }
   | { type: "GET_PERSONS_LOADING" }
-  | { type: "GET_PERSONS_OK"; data: Person[] };
+  | { type: "GET_PERSONS_OK"; data: Person[] }
+  | { type: "REGISTER_PERSON" };
 
 const initialState: PersonsState = { tag: "UNLOADED" };
 
@@ -31,7 +32,8 @@ export default function persons(
 
       case "GET_PERSONS_OK":
         return { tag: "LOADED", persons: action.data };
-
+      case "REGISTER_PERSON":
+        return state;
       default:
         return state;
     }
