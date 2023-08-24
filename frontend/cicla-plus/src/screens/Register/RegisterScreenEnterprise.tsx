@@ -192,6 +192,7 @@ export default function RegisterScreen() {
 
               <div className="sm:col-span-3">
                 <Input
+                  type="password"
                   size="md"
                   label="Senha"
                   value={password}
@@ -212,6 +213,7 @@ export default function RegisterScreen() {
 
               <div className="sm:col-span-3">
                 <Input
+                  type="password"
                   size="md"
                   label="Confirme a Senha"
                   value={confirmPassword}

@@ -61,7 +61,7 @@ export default function RegisterScreen() {
     }
 
     alert("Seu cadastro foi realizado com sucesso, prossiga para o login!");
-    window.location.reload();
+    window.location.replace("/");
   };
 
   return (
@@ -265,6 +265,7 @@ export default function RegisterScreen() {
 
               <div className="sm:col-span-3">
                 <Input
+                  type="password"
                   size="md"
                   label="Senha"
                   value={password}
@@ -285,6 +286,7 @@ export default function RegisterScreen() {
 
               <div className="sm:col-span-3">
                 <Input
+                  type="password"
                   size="md"
                   label="Confirme a Senha"
                   value={confirmPassword}
