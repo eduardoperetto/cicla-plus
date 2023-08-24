@@ -41,6 +41,11 @@ const companyNavListItems = [
     path: "/my-advertisements",
   },
   {
+    label: "Transações em Andamento",
+    icon: Square3Stack3DIcon,
+    path: "/ongoing-transactions",
+  },
+  {
     label: "Conta",
     icon: UserIcon,
     path: "/account",

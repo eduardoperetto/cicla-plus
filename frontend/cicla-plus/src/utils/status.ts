@@ -32,19 +32,16 @@ export function statusToColor(status: string) {
   }
 }
 
-export function statusToHidden(status: string) {
+export function statusToNumber(status: string) {
   switch (status) {
     case "og":
-      return "green";
+      return 1;
     case "de":
-      return "blue";
+      return 2;
     case "ca":
-      return "red";
     case "cm":
-      return "red";
     case "cs":
-      return "red";
     default:
-      return undefined;
+      return 3;
   }
 }

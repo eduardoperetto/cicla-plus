@@ -14,14 +14,14 @@ import {
   Spinner,
   Typography,
 } from "@material-tailwind/react";
-import { store, useDispatch } from "../store/configureStore";
+import { store } from "../store/configureStore";
 import { Transaction } from "../types/Transaction";
 import { materialTypeToString } from "../utils/material";
-import { statusToColor, statusToNumber, statusToString } from "../utils/status";
+import { statusToColor, statusToString } from "../utils/status";
 import { TransactionDialog } from "./Transaction/TransactionDialog";
-import { postUpdateTransactionAction } from "../actions/transactions";
+import { FinishDialog } from "./Transaction/FinishDialog";
 
-const TransactionScreen = () => {
+export default function OngoingTransactionScreen() {
   const username = store.getState().login.user;
   const transactionsState = useSelector(TransactionState);
 
@@ -35,9 +35,10 @@ const TransactionScreen = () => {
       </Typography>
     );
 
-  const transactions = transactionsState.transactions
-    .filter((t) => t.user.user.username === username)
-    .sort((a, b) => statusToNumber(a.status) - statusToNumber(b.status));
+  const transactions = transactionsState.transactions.filter(
+    (t) =>
+      t.advertisement.company.user.username === username && t.status === "og"
+  );
 
   return (
     <>
@@ -54,20 +55,18 @@ const TransactionScreen = () => {
       </Card>
     </>
   );
-};
-
-export default TransactionScreen;
+}
 
 export function TransactionListItem({
   transaction,
 }: {
   transaction: Transaction;
 }) {
-  const dispatch = useDispatch();
-
   const [openDialog, setOpenDialog] = useState(false);
+  const [openFinishDialog, setOpenFinishDialog] = useState(false);
 
   const handleOpenDialog = () => setOpenDialog(!openDialog);
+  const handleOpenFinishDialog = () => setOpenFinishDialog(!openFinishDialog);
 
   return (
     <>
@@ -94,25 +93,11 @@ export function TransactionListItem({
           {transaction.status === "og" && (
             <Button
               variant="filled"
-              color="red"
+              color="blue"
               className="flex"
-              onClick={async () => {
-                const result = await dispatch(
-                  postUpdateTransactionAction(transaction, "cs")
-                );
-
-                if (!result.ok) {
-                  alert(
-                    "Ocorreu um erro ao processar sua solicitação, por favor tente novamente."
-                  );
-                  return;
-                }
-
-                alert("Pedido cancelado com sucesso!");
-                window.location.reload();
-              }}
+              onClick={handleOpenFinishDialog}
             >
-              Cancelar
+              Finalizar
             </Button>
           )}
         </ListItemSuffix>
@@ -122,7 +107,13 @@ export function TransactionListItem({
         handleOpenDialog={handleOpenDialog}
         openDialog={openDialog}
         transaction={transaction}
-        displayToken={true}
+        displayToken={false}
+      />
+
+      <FinishDialog
+        handleOpenDialog={handleOpenFinishDialog}
+        openDialog={openFinishDialog}
+        transaction={transaction}
       />
     </>
   );
