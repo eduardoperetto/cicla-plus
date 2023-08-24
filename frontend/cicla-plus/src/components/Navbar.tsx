@@ -46,6 +46,11 @@ const companyNavListItems = [
     path: "/ongoing-transactions",
   },
   {
+    label: "Relatório de Transações",
+    icon: Square3Stack3DIcon,
+    path: "/report",
+  },
+  {
     label: "Conta",
     icon: UserIcon,
     path: "/account",

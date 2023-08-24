@@ -15,6 +15,7 @@ import AuthRoute from "./AuthRoute";
 import OngoingTransactionScreen from "../screens/OngoingTransactionsScreen";
 import AdminRoute from "./AdminRoute";
 import AdminAdvertisementScreen from "../screens/AdminAdvertisementScreen";
+import CompanyTransactionScreen from "../screens/CompanyTransactionScreen";
 
 export function DefaultRouter() {
   return (
@@ -88,6 +89,15 @@ export function DefaultRouter() {
         element={
           <CompanyRoute>
             <OngoingTransactionScreen />
+          </CompanyRoute>
+        }
+      />
+
+      <Route
+        path="/report"
+        element={
+          <CompanyRoute>
+            <CompanyTransactionScreen />
           </CompanyRoute>
         }
       />
