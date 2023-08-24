@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { Button, Input, Option, Select } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import { validateField } from "../validation-utils";
+import { useDispatch } from "../../store/configureStore";
+import { RegisterCompanyAction } from "../../actions/companies";
 
 export default function RegisterScreen() {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
 
@@ -27,6 +30,33 @@ export default function RegisterScreen() {
 
   const [confirmPassword, setConfirmPassword] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
+
+  const handleConfirm = async () => {
+    const phone = "323412412";
+    const nome = "nana";
+    const ult_nome = "kakak";
+
+    const result = await dispatch(
+      RegisterCompanyAction(
+        email,
+        email,
+        nome,
+        ult_nome,
+        password,
+        confirmPassword,
+        rua,
+        phone,
+        cnpj,
+      )
+    );
+    if (!result.ok) {
+      alert("Ocorreu um erro, por favor tente novamente");
+      return;
+    }
+
+    alert("Seu cadastro foi realizado com sucesso, prossiga para o login!");
+    window.location.replace("/");
+  };
 
   return (
     <div className="flex w-screen h-screen justify-center items-center">
@@ -248,7 +278,8 @@ export default function RegisterScreen() {
             </Button>
           </Link>
           <Link to="/login">
-            <Button color="green" variant="gradient" size="sm">
+            <Button color="green" variant="gradient" size="sm"
+            onClick={handleConfirm}>
               Confirmar
             </Button>
           </Link>
