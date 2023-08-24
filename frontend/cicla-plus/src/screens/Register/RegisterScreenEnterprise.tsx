@@ -7,6 +7,9 @@ import { RegisterCompanyAction } from "../../actions/companies";
 
 export default function RegisterScreen() {
   const dispatch = useDispatch();
+  const [nome, setnome] = useState("");
+  const [nomeError, setnomeError] = useState("");
+
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
 
@@ -24,15 +27,13 @@ export default function RegisterScreen() {
 
   const handleConfirm = async () => {
     const phone = "323412412";
-    const nome = "nana";
-    const ult_nome = "kakak";
 
     const result = await dispatch(
       RegisterCompanyAction(
         email,
         email,
         nome,
-        ult_nome,
+        "",
         password,
         confirmPassword,
         localizacao,
@@ -56,7 +57,20 @@ export default function RegisterScreen() {
           <div className="border-b border-gray-900/10 pb-8">
             <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
               <div className="sm:col-span-2">
-                <Input size="md" label="Nome da Empresa" />
+                <Input
+                  size="md"
+                  label="Nome da Empresa"
+                  value={nome}
+                  onChange={(e) =>
+                    validateField(
+                      e.target.value,
+                      "nome",
+                      setnomeError,
+                      "Nome inválido",
+                      setnome
+                    )
+                  }
+                />
               </div>
 
               <div className="sm:col-span-2">
