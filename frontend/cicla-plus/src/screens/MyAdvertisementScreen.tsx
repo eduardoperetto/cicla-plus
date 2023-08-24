@@ -194,7 +194,7 @@ export default function MyAdvertisementScreen() {
                 <div className="sm:col-span-3">
                   <Input
                     size="md"
-                    label="Quantidade desejada"
+                    label="Quantidade desejada (em Kg)"
                     value={quantidadeDesejada}
                     onChange={(e) => setQuantidadeDesejada(e.target.value)}
                   />
