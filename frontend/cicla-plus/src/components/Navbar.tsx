@@ -52,7 +52,12 @@ const companyNavListItems = [
   },
 ];
 
-const defaultNavListItems = [
+const adminNavListItems = [
+  {
+    label: "Anúncios",
+    icon: Square3Stack3DIcon,
+    path: "/admin-advertisements",
+  },
   {
     label: "Conta",
     icon: UserIcon,
@@ -67,7 +72,7 @@ function NavList() {
     const isCompany = loginState.is_company;
 
     if (isAdmin) {
-      return defaultNavListItems;
+      return adminNavListItems;
     }
 
     if (isCompany) {

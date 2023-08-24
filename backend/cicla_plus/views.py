@@ -122,11 +122,15 @@ def updateTransaction(request):
             advertisement = transaction.first().advertisement
             advertisement.is_finished = True
             advertisement.save()
-        else:
+        else: 
             transaction = Transaction.objects.filter(id=request.POST.get('id'))
         if transaction.count() < 1:
             raise Exception("Transaction not found")
         else:
+            if status == "ca" or status == "cm":
+                advertisement = transaction.first().advertisement
+                advertisement.is_deleted = True
+                advertisement.save()
             transaction.update(
                 status=status,
                 last_update=datetime.now()

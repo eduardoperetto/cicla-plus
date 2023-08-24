@@ -13,6 +13,8 @@ import MyAdvertisementScreen from "../screens/MyAdvertisementScreen";
 import CompanyRoute from "./CompanyRoute";
 import AuthRoute from "./AuthRoute";
 import OngoingTransactionScreen from "../screens/OngoingTransactionsScreen";
+import AdminRoute from "./AdminRoute";
+import AdminAdvertisementScreen from "../screens/AdminAdvertisementScreen";
 
 export function DefaultRouter() {
   return (
@@ -87,6 +89,15 @@ export function DefaultRouter() {
           <CompanyRoute>
             <OngoingTransactionScreen />
           </CompanyRoute>
+        }
+      />
+
+      <Route
+        path="/admin-advertisements"
+        element={
+          <AdminRoute>
+            <AdminAdvertisementScreen />
+          </AdminRoute>
         }
       />
 

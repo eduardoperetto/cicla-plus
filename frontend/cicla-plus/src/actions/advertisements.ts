@@ -76,6 +76,41 @@ export function deleteAdvertisementAction(
   };
 }
 
+export function adminDeleteAdvertisementAction(
+  id: number
+): ThunkAction<Promise<Result.Result<{}, {}>>> {
+  return async (dispatch) => {
+    try {
+      const result = await postDeleteAdvertisement({ id });
+
+      if (!result.ok) {
+        return Result.err({});
+      }
+
+      dispatch({ type: "DELETE_ADVERTISEMENT", data: id });
+
+      const transactionsState = store.getState().transactions;
+
+      if (transactionsState.tag === "LOADED") {
+        const transaction = transactionsState.transactions
+          .sort(
+            (a, b) =>
+              new Date(a.last_update).getTime() -
+              new Date(b.last_update).getTime()
+          )
+          .find((t) => t.advertisement.id === id);
+
+        if (transaction) {
+          dispatch(postUpdateTransactionAction(transaction, "cm"));
+        }
+      }
+      return Result.ok({});
+    } catch {
+      return Result.err({});
+    }
+  };
+}
+
 export function NewAdvertisementAction(
   material_description: any,
   material_type: any,
