@@ -13,7 +13,7 @@ class Account(models.Model):
 
 class Person(Account):
     cpf = models.PositiveBigIntegerField()
-    birthdate = models.DateField()
+    birthdate = models.DateField(null=True)
 
 class Company(Account):
     cnpj = models.PositiveBigIntegerField()
