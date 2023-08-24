@@ -13,7 +13,8 @@ export type CompaniesState =
 export type CompaniesAction =
   | { type: "GET_COMPANIES_ERROR" }
   | { type: "GET_COMPANIES_LOADING" }
-  | { type: "GET_COMPANIES_OK"; data: Company[] };
+  | { type: "GET_COMPANIES_OK"; data: Company[] }
+  | { type: "REGISTER_COMPANY" };
 
 const initialState: CompaniesState = { tag: "UNLOADED" };
 
@@ -31,7 +32,8 @@ export default function companies(
 
       case "GET_COMPANIES_OK":
         return { tag: "LOADED", companies: action.data };
-
+      case "REGISTER_COMPANY":
+        return state;
       default:
         return state;
     }
