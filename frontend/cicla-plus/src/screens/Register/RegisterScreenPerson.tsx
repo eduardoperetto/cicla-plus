@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Input, Option, Select } from "@material-tailwind/react";
+import { Button, Input } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import { validateField } from "../validation-utils";
 import { RegisterPersonAction } from "../../actions/persons";
@@ -16,17 +16,8 @@ export default function RegisterScreen() {
   const [sobrenome, setSobrenome] = useState("");
   const [sobrenomeError, setSobrenomeError] = useState("");
 
-  const [rua, setRua] = useState("");
-  const [ruaError, setRuaError] = useState("");
-
-  const [cidade, setCidade] = useState("");
-  const [cidadeError, setCidadeError] = useState("");
-
-  const [bairro, setBairro] = useState("");
-  const [bairroError, setBairroError] = useState("");
-
-  const [cep, setCep] = useState("");
-  const [cepError, SetCepError] = useState("");
+  const [localizacao, setLocalizacao] = useState("");
+  const [localizacaoError, setLocalizacaoError] = useState("");
 
   const [cpf, setCPF] = useState("");
   const [CPFError, setCPFError] = useState("");
@@ -49,7 +40,7 @@ export default function RegisterScreen() {
         sobrenome,
         password,
         confirmPassword,
-        rua,
+        localizacao,
         phone,
         cpf,
         birthdate
@@ -154,15 +145,23 @@ export default function RegisterScreen() {
                 <Input
                   size="md"
                   label="Localização"
-                  ></Input>
+                  value={localizacao}
+                  onChange={(e) =>
+                    validateField(
+                      e.target.value,
+                      "rua",
+                      setLocalizacaoError,
+                      "Localização Inválida",
+                      setLocalizacao
+                    )
+                  }
+                />
+                {localizacaoError && (
+                  <span className="text-red-500 text-sm">
+                    {localizacaoError}
+                  </span>
+                )}
               </div>
-
-              <div className="sm:col-span-2">
-                <Input
-                  size="md"
-                  label="Telefone"
-                  ></Input>
-                  </div>
 
               <div className="sm:col-span-3">
                 <Input

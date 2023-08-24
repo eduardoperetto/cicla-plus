@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Input, Option, Select } from "@material-tailwind/react";
+import { Button, Input } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import { validateField } from "../validation-utils";
 import { useDispatch } from "../../store/configureStore";
@@ -10,17 +10,8 @@ export default function RegisterScreen() {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
 
-  const [rua, setRua] = useState("");
-  const [ruaError, setRuaError] = useState("");
-
-  const [cidade, setCidade] = useState("");
-  const [cidadeError, setCidadeError] = useState("");
-
-  const [bairro, setBairro] = useState("");
-  const [bairroError, setBairroError] = useState("");
-
-  const [cep, setCep] = useState("");
-  const [cepError, SetCepError] = useState("");
+  const [localizacao, setLocalizacao] = useState("");
+  const [localizacaoError, setLocalizacaoError] = useState("");
 
   const [cnpj, setCNPJ] = useState("");
   const [CNPJError, setCNPJError] = useState("");
@@ -44,9 +35,9 @@ export default function RegisterScreen() {
         ult_nome,
         password,
         confirmPassword,
-        rua,
+        localizacao,
         phone,
-        cnpj,
+        cnpj
       )
     );
     if (!result.ok) {
@@ -92,7 +83,22 @@ export default function RegisterScreen() {
                 <Input
                   size="md"
                   label="Localização"
-                  ></Input>
+                  value={localizacao}
+                  onChange={(e) =>
+                    validateField(
+                      e.target.value,
+                      "rua",
+                      setLocalizacaoError,
+                      "Localização Inválida",
+                      setLocalizacao
+                    )
+                  }
+                />
+                {localizacaoError && (
+                  <span className="text-red-500 text-sm">
+                    {localizacaoError}
+                  </span>
+                )}
               </div>
 
               <div className="sm:col-span-4">
@@ -114,14 +120,6 @@ export default function RegisterScreen() {
                   <span className="text-red-500 text-sm">{emailError}</span>
                 )}
               </div>
-
-
-              <div className="sm:col-span-2">
-                <Input
-                  size="md"
-                  label="Telefone"
-                  ></Input>
-                  </div>
 
               <div className="sm:col-span-3">
                 <Input
@@ -181,8 +179,12 @@ export default function RegisterScreen() {
             </Button>
           </Link>
           <Link to="/login">
-            <Button color="green" variant="gradient" size="sm"
-            onClick={handleConfirm}>
+            <Button
+              color="green"
+              variant="gradient"
+              size="sm"
+              onClick={handleConfirm}
+            >
               Confirmar
             </Button>
           </Link>
